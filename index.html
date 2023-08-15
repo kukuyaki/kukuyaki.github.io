@@ -1,0 +1,75 @@
+<script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LIFF App</title>
+</head>
+
+<body>
+
+
+  <p id="os"><b>OS:</b></p>
+  <p id="language"><b>Language:</b></p>
+  <p id="version"><b>Version:</b></p>
+  <p id="isInClient"><b>isInClient:</b></p>
+  <p id="accessToken"><b>AccessToken:</b></p>
+  <img id="pictureUrl" />
+  <p id="userId"><b>userId:</b></p>
+  <p id="displayName"><b>displayName:</b></p>
+  <p id="statusMessage"><b>statusMessage:</b></p>
+  <p id="decodedIDToken"><b>email:</b></p>
+  <p id="type"><b>type:</b></p>
+  <p id="viewType"><b>viewType:</b></p>
+  <p id="utouId"><b>utouId:</b></p>
+  <p id="roomId"><b>roomId:</b></p>
+  <p id="groupId"><b>groupId:</b></p>
+  <p id="friendship"><b>isFriendship:</b></p>
+  <p id="scanCode"><b>Code:</b></p>
+  <p id="isLoggedIn"><b>isLoggedIn:</b></p>
+  <p id="universalLink1"><b>Universal Link:</b></p>
+  <p id="universalLink2"><b>Universal Link with Query params:</b></p>
+  <p><a href="liff/path/?param=9">Link to Path</a></p>
+
+  <script>
+    function getEnvironment() {
+      document.getElementById("os").append(liff.getOS());
+      document.getElementById("language").append(liff.getLanguage());
+      document.getElementById("version").append(liff.getVersion());
+      document.getElementById("accessToken").append(liff.getAccessToken());
+      document.getElementById("isInClient").append(liff.isInClient());
+
+      if (liff.isInClient()) {
+        document.getElementById("btnLogOut").style.display = "none";
+      } else {
+        document.getElementById("btnMsg").style.display = "none";
+        document.getElementById("btnScanCode").style.display = "none";
+        document.getElementById("btnClose").style.display = "none";
+      }
+    }
+
+    async function main() {
+      const init = await liff.init({ liffId: "1660799292-NKL2zMnG" });
+      getEnvironment();
+      getUserProfile();
+      // getContext()
+      // getFriendship()
+      // createUniversalLink()
+    }
+    main();
+  </script>
+</body>
+
+</html>
+<!-- 先寫一個線上申裝的網頁，使用者可以在官方line上點擊liff的連結後進入該網頁，並輸入線上申裝的資訊，輸入完成後將剛剛填的資訊用line回傳給用戶看 -->
+<!--First 網速方案 -->
+<!--Second 繳費方式、首次申裝優惠、加購商品、加值服務 -->
+<!--Second 繳費方式、首次申裝優惠、加購商品、加值服務 -->
+<!--Third  資料填寫  -->
+<!-- 1. Create a TXT record in your DNS configuration for the following hostname: _github-pages-challenge-kukuyaki.lemon.pie
+2. Use this code for the value of the TXT record: 7650250a9ba07d92088a770deb9c29
+3. Wait until your DNS configuration changes. This could take up to 24 hours to propagate.
+   -->
