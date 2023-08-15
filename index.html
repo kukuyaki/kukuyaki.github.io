@@ -15,23 +15,48 @@
   <p id="version"><b>Version:</b></p>
   <img id="pictureUrl" />
   <p id="displayName"><b>displayName:</b></p>
+  <p id="decodedIDToken"><b>email:</b></p>
+  <p><a href="liff/path/?param=9">Link to Path</a></p>
+
+  <div class="col-12" style="margin: 10px">
+    <label>姓名</label>
+    <input type="text" id="name" class="form-control" />
+
+  </div>
 
   <button id="btnMsg" onclick="sendMsg()">Send Message</button>
+  <button id="btnShare" onclick="shareMsg()">Share Target Picker</button>
+  <button onclick="openWindow()">Open Window</button>
+  <button id="btnScanCode" onclick="scanCode()">Scan Code</button>
+  <button id="btnLogOut" onclick="logOut()">Log Out</button>
+  <button id="btnClose" onclick="closed()">Close</button>
+
+  <!-- <script src="js/vconsole.min.js"></script> -->
+  <!-- <script>
+    var vConsole = new VConsole()
+    console.log("Hello World!")
+  </script> -->
 
   <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
   <script>
     function createUniversalLink() { }
+
     async function shareMsg() { }
+
     function logOut() { }
+
     function closed() { }
-    function getContext() { }
+
     async function scanCode() { }
+
     function openWindow() { }
+
     async function getFriendship() { }
 
     async function sendMsg() {
 
       const name = document.getElementById('name').value;
+
       liff.sendMessages([
         //推播訊息
         {
@@ -39,14 +64,19 @@
           text: name
         }
       ]);
+
+
     }
 
-
+    function getContext() { }
+    
     async function getUserProfile() {
       const profile = await liff.getProfile();
       document.getElementById("pictureUrl").src = profile.pictureUrl;
       document.getElementById("userId").append(profile.userId);
       document.getElementById("displayName").append(profile.displayName);
+      document.getElementById("decodedIDToken").append(profile.displaydecodedIDToken);
+
       msg = profile.displayName;
       document.getElementById("statusMessage").append(profile.statusMessage);
     }
@@ -79,5 +109,14 @@
     main();
   </script>
 </body>
-</html>
 
+</html>
+<!-- 先寫一個線上申裝的網頁，使用者可以在官方line上點擊liff的連結後進入該網頁，並輸入線上申裝的資訊，輸入完成後將剛剛填的資訊用line回傳給用戶看 -->
+<!--First 網速方案 -->
+<!--Second 繳費方式、首次申裝優惠、加購商品、加值服務 -->
+<!--Second 繳費方式、首次申裝優惠、加購商品、加值服務 -->
+<!--Third  資料填寫  -->
+<!-- 1. Create a TXT record in your DNS configuration for the following hostname: _github-pages-challenge-kukuyaki.lemon.pie
+2. Use this code for the value of the TXT record: 7650250a9ba07d92088a770deb9c29
+3. Wait until your DNS configuration changes. This could take up to 24 hours to propagate.
+   -->
