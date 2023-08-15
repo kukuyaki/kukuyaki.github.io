@@ -11,7 +11,7 @@
   <title>LIFF App</title>
 </head>
 
-<body>
+<body style="background-color:rgb(246, 250, 175);">
 
   <div class="col-12" style="margin: 10px">
     <input namne="name" type="text" placeholder="輸入姓名" id="name" class="form-control" autofocus required />
@@ -23,14 +23,47 @@
     <input namne="address" type="text" placeholder="輸入地址" id="addre" class="form-control" required />
   </div>
   <div class="col-12" style="margin: 10px">
-    <input namne="mail" type="email" placeholder="輸入信箱" id="addre" class="form-control" required />
-  </div>
-  <div class="col-12" style="margin: 10px">
-    <input namne="date" type="date" placeholder="輸入申裝日期" id="date" class="form-control" required />
+    <input namne="mail" type="email" placeholder="輸入信箱" id="email" class="form-control" required />
   </div>
 
+  <div id="radio">
+    <label><input type="radio" name="label" value="400M" checked="checked"><span class="round button">400M</span></label>
+    <label><input type="radio" name="label" value="300M"><span class="round button">300M</span></label>
+    <label><input type="radio" name="label" value="200M"><span class="round button">200M</span></label>
+    <label><input type="radio" name="label" value="100M"><span class="round button">100M</span></label>
+  </div>
+  <style>
+    #radio input[type="radio"] {
+      display: none;
+    }
+
+    #radio input:checked+.button {
+      background: #f27c28;
+      color: #000000;
+      cursor: default;
+    }
+
+    #radio .button {
+      display: inline-block;
+      margin: 0 5px 10px 0;
+      padding: 5px 10px;
+      background: #f7f7f7;
+      color: #333;
+      cursor: pointer;
+    }
+
+    #radio .button:hover {
+      background: #a0a161;
+      color: #fff;
+    }
+
+    #radio .round {
+      border-radius: 5px;
+    }
+  </style>
 
   <button id="btnMsg" onclick="sendMsg()">確認</button>
+  <button id="btnMsg" onclick="closeW()">關閉</button>
 
   <script>
     var user = liff.getDecodedIDToken();
@@ -38,7 +71,7 @@
 
     async function sendMsg() {
 
-      const name = "hi123456789";
+      const name = document.getElementById('name').value;
 
       liff.sendMessages([
         //推播訊息
@@ -51,7 +84,9 @@
 
     }
 
-
+    async function closeW() {
+      liff.closeWindow();
+    }
 
     async function getUserProfile() {
       const profile = await liff.getProfile();
