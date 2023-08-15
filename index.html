@@ -1,6 +1,8 @@
 <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
 <script src="C:\Users\admin\dog\main.js"></script>
 
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,37 +14,97 @@
 </head>
 
 <body style="background-color:rgb(246, 250, 175);">
-  
 
-  <button id="btnMsg" onclick="shareMsg()">確</button>
- 
-  
+
+  <button id="btnMsg" onclick="sendMsg()">確認</button>
+
+
   <script>
-    async function shareMsg() {
-      liff.shareTargetPicker([
+    var flexThing ={
+  "type": "bubble",
+  "body": {
+    "type": "box",
+    "layout": "vertical",
+    "contents": [
+      {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
           {
-            "type": "flex",
-            "altText": `${urlParams.get('name')} present name card from Netlify`,
-            "contents": flexContent
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+              {
+                "type": "text",
+                "contents": [],
+                "size": "xl",
+                "wrap": true,
+                "text": "username",
+                "color": "#ffffff",
+                "weight": "bold"
+              },
+              {
+                "type": "separator",
+                "margin": "xs"
+              },
+              {
+                "type": "text",
+                "text": "phone number",
+                "color": "#ffffffcc",
+                "size": "sm"
+              },
+              {
+                "type": "text",
+                "text": "address",
+                "color": "#ffffffcc"
+              },
+              {
+                "type": "text",
+                "text": "email",
+                "color": "#ffffffcc"
+              },
+              {
+                "type": "text",
+                "text": "date",
+                "color": "#ffffffcc"
+              }
+            ],
+            "spacing": "sm"
           }
+        ]
+      }
+    ],
+    "paddingAll": "20px",
+    "backgroundColor": "#464F69"
+  }
+}
+    async function sendMsg() {
+      const name = document.getElementById('name').value;
+      const number = document.getElementById('number').value;
+      const address = document.getElementById('address').value;
+      const email = document.getElementById('email').value;
+      const date = document.getElementById('date').value;
+
+      liff
+        .sendMessages([
+          {
+            type: "bubble",
+            text: flexThing,
+
+          },
         ])
-        .then(function (res) {
-          if (res) {
-            // succeeded in sending a message through TargetPicker
-            console.log(`[${res.status}] Message sent!`);
-          } else {
-            // sending message canceled
-            console.log("TargetPicker was closed!");
-          }
+        .then(() => {
+          console.log("message sent");
         })
-        .catch(function (error) {
-          // something went wrong before sending a message
-          console.log("something wrong happen");
+        .catch((err) => {
+          console.log("error", err);
         });
+      liff.closeWindow();
     }
-    
-      
-      
+
+
+
   </script>
 </body>
+
 </html>
