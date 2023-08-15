@@ -14,7 +14,7 @@
 <body>
 
   <div class="col-12" style="margin: 10px">
-    <input namne="name" type="text" placeholder="輸入姓名" id="displayname" class="form-control" autofocus required />
+    <input namne="name" type="text" placeholder="輸入姓名" id="name" class="form-control" autofocus required />
   </div>
   <div class="col-12" style="margin: 10px">
     <input namne="number" type="tel" placeholder="輸入電話" id="number" class="form-control" required />
@@ -36,21 +36,22 @@
     var user = liff.getDecodedIDToken();
     var email = user.email;
 
-    liff
-      .sendMessages([
+    async function sendMsg() {
+
+      const name = document.getElementById('name').value;
+
+      liff.sendMessages([
+        //推播訊息
         {
-          type: "text",
-          text: "Hello, World!",
-        },
-      ])
-      .then(() => {
-        console.log("message sent");
-      })
-      .catch((err) => {
-        console.log("error", err);
-      });
-      
-    function getContext() { }
+          type: 'text',
+          text: name
+        }
+      ]);
+
+
+    }
+
+
 
     async function getUserProfile() {
       const profile = await liff.getProfile();
