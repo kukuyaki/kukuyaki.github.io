@@ -23,7 +23,7 @@
     <input namne="address" type="text" placeholder="輸入地址" id="address" class="form-control" required />
   </div>
   <div class="col-12" style="margin: 10px">
-    <input namne="mail" type="email" placeholder="輸入信箱" id="email" class="form-control" required />
+    <input namne="mail" type="email" placeholder="輸入" id="email" class="form-control" required />
   </div>
   <div class="col-12" style="margin: 10px">時間
     <input namne="mail" type="date" id="date" class="form-control" required />
@@ -80,8 +80,62 @@
       liff
         .sendMessages([
           {
-            type: "text",
-            text: "名字:"+name+"\n電話:"+number+"\n地址:"+address+"\n信箱:"+email+"\n時間:"+date,
+            type: bubble,
+            body: {
+              type: box,
+              layout: vertical,
+              contents: [
+                {
+                  type: box,
+                  layout: vertical,
+                  contents: [
+                    {
+                      type: box,
+                      layout: vertical,
+                      contents: [
+                        {
+                          type: text,
+                          contents: [],
+                          size: xl,
+                          wrap: true,
+                          text: name,
+                          color: "#FFFFFF",
+                          weight: bold
+                        },
+                        {
+                          type: separator,
+                          margin: xs
+                        },
+                        {
+                          type: text,
+                          text: number,
+                          color: "#ffffffcc",
+                          size: sm
+                        },
+                        {
+                          type: text,
+                          text: address,
+                          color: '#ffffffcc'
+                        },
+                        {
+                          type: text,
+                          text: email,
+                          color:'#ffffffcc'
+                        },
+                        {
+                          type: text,
+                          text: date,
+                          color: '#ffffffcc'
+                        }
+                      ],
+                      spacing: sm
+                    }
+                  ]
+                }
+              ],
+              paddingAll : "20 px",
+              backgroundColor : '#FFFFFFFF'
+            }
           },
         ])
         .then(() => {
@@ -90,7 +144,7 @@
         .catch((err) => {
           console.log("error", err);
         });
-        liff.closeWindow();
+      liff.closeWindow();
     }
 
     async function closeW() {
