@@ -7,7 +7,6 @@
 <html lang="en">
 
 <head>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/PamornT/flex2html@main/css/flex2html.css">
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="favicon.ico" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -15,7 +14,6 @@
 </head>
 
 <body style="background-color:rgb(246, 250, 175);">
-  <script src="https://cdn.jsdelivr.net/gh/PamornT/flex2html@main/js/flex2html.min.js"></script>
   <div class="col-12" style="margin: 10px">
     <input namne="name" type="text" placeholder="輸入" id="name" class="form-control" autofocus required />
   </div>
@@ -32,48 +30,10 @@
     <input namne="mail" type="date" id="date" class="form-control" required />
   </div>
 
-  <div id="radio">
-    <label><input type="radio" name="label" value="400M" checked="checked"><span
-        class="round button">400M</span></label>
-    <label><input type="radio" name="label" value="300M"><span class="round button">300M</span></label>
-    <label><input type="radio" name="label" value="200M"><span class="round button">200M</span></label>
-    <label><input type="radio" name="label" value="100M"><span class="round button">100M</span></label>
-  </div>
-  <style>
-    #radio input[type="radio"] {
-      display: none;
-    }
-
-    #radio input:checked+.button {
-      background: #f27c28;
-      color: #000000;
-      cursor: default;
-    }
-
-    #radio .button {
-      display: inline-block;
-      margin: 0 5px 10px 0;
-      padding: 5px 10px;
-      background: #f7f7f7;
-      color: #333;
-      cursor: pointer;
-    }
-
-    #radio .button:hover {
-      background: #a0a161;
-      color: #fff;
-    }
-
-    #radio .round {
-      border-radius: 5px;
-    }
-  </style>
-
   <button id="btnMsg" onclick="sendMsg()">確認</button>
   <button id="btnMsg" onclick="closeW()">關閉</button>
-
+  
   <script>
-
     async function sendMsg() {
       const name = document.getElementById('name').value;
       const number = document.getElementById('number').value;
@@ -91,10 +51,10 @@
                   type: "box", layout: "vertical",
                   contents: [{
                     type: "text",
-                    contents: [], size: "xl", wrap: true, text: "username", color: "#ffffff", weight: "bold"
+                    contents: [], size: "xl", wrap: true, text: "name", color: "#ffffff", weight: "bold"
                   },
                   { type: "separator", margin: "xs" },
-                  { type: "text", text: "phone number", color: "#ffffffcc", size: "sm" },
+                  { type: "text", text: "number", color: "#ffffffcc", size: "sm" },
                   { type: "text", text: "address", color: "#ffffffcc" },
                   { type: "text", text: "email", color: "#ffffffcc" },
                   { type: "text", text: "date", color: "#ffffffcc" }], spacing: "sm"
@@ -111,37 +71,26 @@
         });
       liff.closeWindow();
     }
-
     async function closeW() {
       liff.closeWindow();
     }
-
     async function getUserProfile() {
       const profile = await liff.getProfile();
       document.getElementById("pictureUrl").src = profile.pictureUrl;
       document.getElementById("userId").append(profile.userId);
       document.getElementById("displayName").append(profile.displayName);
     }
-
-
     function getEnvironment() {
       document.getElementById("os").append(liff.getOS());
       document.getElementById("language").append(liff.getLanguage());
       document.getElementById("version").append(liff.getVersion());
     }
-
     async function main() {
       const init = await liff.init({ liffId: "2000402390-1Wm0v2ww" });
       getEnvironment();
       getUserProfile();
-      // getContext()
-      // getFriendship()
-      // createUniversalLink()
     }
     main();
   </script>
 </body>
-
 </html>
-<!-- 預約時間
-       -->
