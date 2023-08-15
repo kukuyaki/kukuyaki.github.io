@@ -1,82 +1,13 @@
-<script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
-
-
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="favicon.ico" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>LIFF App</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ttest</title>
 </head>
+<body>
+    <p id="os">os:<b></b></p>
+    <script src="supertest.js"></script>
 
-<body style="background-color:rgb(246, 250, 175);">
-  <div class="col-12" style="margin: 10px">
-    <input namne="name" type="text" placeholder="輸入姓名" id="name" class="form-control" autofocus required />
-  </div>
-  <div class="col-12" style="margin: 10px">
-    <input namne="number" type="tel" placeholder="輸入電話" id="number" class="form-control" required />
-  </div>
-  <div class="col-12" style="margin: 10px">
-    <input namne="address" type="text" placeholder="輸入地址" id="address" class="form-control" required />
-  </div>
-  <div class="col-12" style="margin: 10px">
-    <input namne="mail" type="email" placeholder="輸入信箱" id="email" class="form-control" required />
-  </div>
-  <div class="col-12" style="margin: 10px">時間
-    <input namne="mail" type="date" id="date" class="form-control" required />
-  </div>
-  <button id="btnMsg" onclick="sendMsg()">確認</button>
-  <button id="btnMsg" onclick="closeW()">關閉</button>
-
-  <script>
-    async function sendMsg() {
-      const name = document.getElementById('name').value;
-      const number = document.getElementById('number').value;
-      const address = document.getElementById('address').value;
-      const email = document.getElementById('email').value;
-      const date = document.getElementById('date').value;
-
-      liff
-        .sendMessages([
-          {
-            type: "text",
-            text: "名字:" + name + "\n電話:" + number + "\n地址:" + address + "\n信箱:" + email+ "\n日期:" + date,
-
-          },
-        ])
-        .then(() => {
-          console.log("message sent");
-        })
-        .catch((err) => {
-          console.log("error", err);
-        });
-      liff.closeWindow();
-    }
-
-    async function closeW() {
-      liff.closeWindow();
-    }
-    async function getUserProfile() {
-      const profile = await liff.getProfile();
-      document.getElementById("pictureUrl").src = profile.pictureUrl;
-      document.getElementById("userId").append(profile.userId);
-      document.getElementById("displayName").append(profile.displayName);
-    }
-    function getEnvironment() {
-      document.getElementById("os").append(liff.getOS());
-      document.getElementById("language").append(liff.getLanguage());
-      document.getElementById("version").append(liff.getVersion());
-    }
-    async function main() {
-      const init = await liff.init({ liffId: "2000402390-1Wm0v2ww" });
-      getEnvironment();
-      getUserProfile();
-    }
-    main();
-  </script>
 </body>
-
 </html>
