@@ -36,7 +36,7 @@
 
   <script>
     function getEnvironment() {
-      document.getElementById("os")=liff.getOS();
+      document.getElementById("os").append(liff.getOS());
       document.getElementById("language").append(liff.getLanguage());
       document.getElementById("version").append(liff.getVersion());
       document.getElementById("accessToken").append(liff.getAccessToken());
@@ -52,7 +52,7 @@
     }
 
     async function main() {
-      const init = await liff.init({ liffId: "1660799292-NKL2zMnG" });
+      const init = await liff.init({ liffId: "2000402390-1Wm0v2ww" });
       getEnvironment();
       getUserProfile();
       // getContext()
