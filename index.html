@@ -12,13 +12,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>LIFF App</title>
 </head>
+
 <body style="background-color:rgb(246, 250, 175);">
   <script src="https://cdn.jsdelivr.net/gh/PamornT/flex2html@main/js/flex2html.min.js"></script>
   <div class="col-12" style="margin: 10px">
-    <input namne="name" type="text" placeholder="輸入名" id="name" class="form-control" autofocus required />
+    <input namne="name" type="text" placeholder="輸入姓名" id="name" class="form-control" autofocus required />
   </div>
   <div class="col-12" style="margin: 10px">
-    <input namne="number" type="tel" placeholder="輸入" id="number" class="form-control" required />
+    <input namne="number" type="tel" placeholder="輸入電話" id="number" class="form-control" required />
   </div>
   <div class="col-12" style="margin: 10px">
     <input namne="address" type="text" placeholder="輸入地址" id="address" class="form-control" required />
@@ -81,10 +82,24 @@
       liff
         .sendMessages([
           {
-            
-            type: "bubble",
-            text: "名字:"+name+"\n電話:"+number+"\n地址:"+address+"\n信箱:"+email+"\n時間:"+date,
-
+            type: "bubble", body: {
+              type: "box", layout: "vertical",
+              contents: [{
+                type: "box", layout: "vertical",
+                contents: [{
+                  type: "box", layout: "vertical",
+                  contents: [{
+                    type: "text",
+                    contents: [], size: "xl", wrap: true, text: "username", color: "#ffffff", weight: "bold"
+                  },
+                  { type: "separator", margin: "xs" },
+                  { type: "text", text: "phone number", color: "#ffffffcc", size: "sm" },
+                  { type: "text", text: "address", color: "#ffffffcc" },
+                  { type: "text", text: "email", color: "#ffffffcc" },
+                  { type: "text", text: "date", color: "#ffffffcc" }], spacing: "sm"
+                }]
+              }], paddingAll: "20px", backgroundColor: "#464F69"
+            }
           },
         ])
         .then(() => {
@@ -93,7 +108,7 @@
         .catch((err) => {
           console.log("error", err);
         });
-        liff.closeWindow();
+      liff.closeWindow();
     }
 
     async function closeW() {
