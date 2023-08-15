@@ -1,109 +1,117 @@
-<script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
-<script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
-
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
   <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="favicon.ico" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>LIFF App</title>
+  <meta name="viewport"
+    content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0,viewport-fit=cover" />
+  <title>My LIFF app</title>
+  <link rel="stylesheet" href="css/style.css" media="all" />
 </head>
 
-<body style="background-color:rgb(246, 250, 175);">
+<body>
+  <p id="os"><b>OS:</b></p>
+  <p id="language"><b>Language:</b></p>
+  <p id="version"><b>Version:</b></p>
+  <p id="isInClient"><b>isInClient:</b></p>
+  <p id="accessToken"><b>AccessToken:</b></p>
+  <img id="pictureUrl" />
+  <p id="userId"><b>userId:</b></p>
+  <p id="displayName"><b>displayName:</b></p>
+  <p id="statusMessage"><b>statusMessage:</b></p>
+  <p id="decodedIDToken"><b>email:</b></p>
+  <p id="type"><b>type:</b></p>
+  <p id="viewType"><b>viewType:</b></p>
+  <p id="utouId"><b>utouId:</b></p>
+  <p id="roomId"><b>roomId:</b></p>
+  <p id="groupId"><b>groupId:</b></p>
+  <p id="friendship"><b>isFriendship:</b></p>
+  <p id="scanCode"><b>Code:</b></p>
+  <p id="isLoggedIn"><b>isLoggedIn:</b></p>
+  <p id="universalLink1"><b>Universal Link:</b></p>
+  <p id="universalLink2"><b>Universal Link with Query params:</b></p>
+  <p><a href="liff/path/?param=9">Link to Path</a></p>
 
   <div class="col-12" style="margin: 10px">
-    <input namne="name" type="text" placeholder="輸入姓名" id="name" class="form-control" autofocus required />
-  </div>
-  <div class="col-12" style="margin: 10px">
-    <input namne="number" type="tel" placeholder="輸入電話" id="number" class="form-control" required />
-  </div>
-  <div class="col-12" style="margin: 10px">
-    <input namne="address" type="text" placeholder="輸入地址" id="addre" class="form-control" required />
-  </div>
-  <div class="col-12" style="margin: 10px">
-    <input namne="mail" type="email" placeholder="輸入信箱" id="email" class="form-control" required />
+    <label>姓名</label>
+    <input type="text" id="name" class="form-control" />
+
   </div>
 
-  <div id="radio">
-    <label><input type="radio" name="label" value="400M" checked="checked"><span class="round button">400M</span></label>
-    <label><input type="radio" name="label" value="300M"><span class="round button">300M</span></label>
-    <label><input type="radio" name="label" value="200M"><span class="round button">0M</span></label>
-    <label><input type="radio" name="label" value="100M"><span class="round button">100M</span></label>
-  </div>
-  <style>
-    #radio input[type="radio"] {
-      display: none;
-    }
+  <button id="btnMsg" onclick="sendMsg()">Send Message</button>
+  <button id="btnShare" onclick="shareMsg()">Share Target Picker</button>
+  <button onclick="openWindow()">Open Window</button>
+  <button id="btnScanCode" onclick="scanCode()">Scan Code</button>
+  <button id="btnLogOut" onclick="logOut()">Log Out</button>
+  <button id="btnClose" onclick="closed()">Close</button>
 
-    #radio input:checked+.button {
-      background: #f27c28;
-      color: #000000;
-      cursor: default;
-    }
+  <!-- <script src="js/vconsole.min.js"></script> -->
+  <!-- <script>
+    var vConsole = new VConsole()
+    console.log("Hello World!")
+  </script> -->
 
-    #radio .button {
-      display: inline-block;
-      margin: 0 5px 10px 0;
-      padding: 5px 10px;
-      background: #f7f7f7;
-      color: #333;
-      cursor: pointer;
-    }
-
-    #radio .button:hover {
-      background: #a0a161;
-      color: #fff;
-    }
-
-    #radio .round {
-      border-radius: 5px;
-    }
-  </style>
-
-  <button id="btnMsg" onclick="sendMsg()">確認</button>
-  <button id="btnMsg" onclick="closeW()">關閉</button>
-
+  <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
   <script>
-    var user = liff.getDecodedIDToken();
-    var email = user.email;
+    function createUniversalLink() { }
+
+    async function shareMsg() { }
+
+    function logOut() { }
+
+    function closed() { }
+
+    async function scanCode() { }
+
+    function openWindow() { }
+
+    async function getFriendship() { }
 
     async function sendMsg() {
 
-      const name = document.getElementById('name').textContent;
+      const name = document.getElementById('name').value;
 
       liff.sendMessages([
         //推播訊息
         {
           type: 'text',
-          text: "hello, wagawaga"
+          text: name
         }
       ]);
 
 
     }
 
-    async function closeW() {
-      liff.closeWindow();
-    }
+    function getContext() { }
 
     async function getUserProfile() {
       const profile = await liff.getProfile();
       document.getElementById("pictureUrl").src = profile.pictureUrl;
       document.getElementById("userId").append(profile.userId);
       document.getElementById("displayName").append(profile.displayName);
+      msg = profile.displayName;
+      document.getElementById("statusMessage").append(profile.statusMessage);
     }
 
-
+    //ดึงค่ามาdisplay
     function getEnvironment() {
-      document.getElementById("os").append(liff.getOS());
+      document.getElementById("os").append(liff.getOS()); //ใช้deviceอะไร
       document.getElementById("language").append(liff.getLanguage());
       document.getElementById("version").append(liff.getVersion());
+      document.getElementById("accessToken").append(liff.getAccessToken());
+      document.getElementById("isInClient").append(liff.isInClient()); //เปิดlineจากมือถือหรืออย่างอื่น
+
+      if (liff.isInClient()) {
+        document.getElementById("btnLogOut").style.display = "none";
+      } else {
+        document.getElementById("btnMsg").style.display = "none";
+        document.getElementById("btnScanCode").style.display = "none";
+        document.getElementById("btnClose").style.display = "none";
+      }
     }
 
     async function main() {
-      const init = await liff.init({ liffId: "2000402390-1Wm0v2ww" });
+      const init = await liff.init({ liffId: "1660799292-NKL2zMnG" });
       getEnvironment();
       getUserProfile();
       // getContext()
