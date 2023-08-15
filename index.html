@@ -25,6 +25,9 @@
   <div class="col-12" style="margin: 10px">
     <input namne="mail" type="email" placeholder="輸入信箱" id="email" class="form-control" required />
   </div>
+  <div class="col-12" style="margin: 10px">時間
+    <input namne="mail" type="date" id="date" class="form-control" required />
+  </div>
 
   <div id="radio">
     <label><input type="radio" name="label" value="400M" checked="checked"><span
@@ -73,11 +76,12 @@
       const number = document.getElementById('number').value;
       const address = document.getElementById('address').value;
       const email = document.getElementById('email').value;
+      const date = document.getElementById('date').value;
       liff
         .sendMessages([
           {
             type: "text",
-            text: "名字:"+name+"\n電話:"+number+"\n地址:"+address+"\n信箱:"+email,
+            text: "名字:"+name+"\n電話:"+number+"\n地址:"+address+"\n信箱:"+email+"\n時間:"+date,
           },
         ])
         .then(() => {
@@ -120,3 +124,5 @@
 </body>
 
 </html>
+<!-- 預約時間
+       -->
