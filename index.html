@@ -1,18 +1,19 @@
 <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
-<script src="C:\Users\admin\dog\main.js"></script>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/PamornT/flex2html@main/css/flex2html.css">
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="favicon.ico" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>LIFF App</title>
 </head>
-
 <body style="background-color:rgb(246, 250, 175);">
-
+  <script src="https://cdn.jsdelivr.net/gh/PamornT/flex2html@main/js/flex2html.min.js"></script>
   <div class="col-12" style="margin: 10px">
     <input namne="name" type="text" placeholder="輸入姓名" id="name" class="form-control" autofocus required />
   </div>
@@ -23,7 +24,7 @@
     <input namne="address" type="text" placeholder="輸入地址" id="address" class="form-control" required />
   </div>
   <div class="col-12" style="margin: 10px">
-    <input namne="mail" type="email" placeholder="輸入" id="email" class="form-control" required />
+    <input namne="mail" type="email" placeholder="輸入信箱" id="email" class="form-control" required />
   </div>
   <div class="col-12" style="margin: 10px">時間
     <input namne="mail" type="date" id="date" class="form-control" required />
@@ -80,62 +81,10 @@
       liff
         .sendMessages([
           {
-            type: bubble,
-            body: {
-              type: box,
-              layout: vertical,
-              contents: [
-                {
-                  type: box,
-                  layout: vertical,
-                  contents: [
-                    {
-                      type: box,
-                      layout: vertical,
-                      contents: [
-                        {
-                          type: text,
-                          contents: [],
-                          size: xl,
-                          wrap: true,
-                          text: name,
-                          color: "#FFFFFF",
-                          weight: bold
-                        },
-                        {
-                          type: separator,
-                          margin: xs
-                        },
-                        {
-                          type: text,
-                          text: number,
-                          color: "#ffffffcc",
-                          size: sm
-                        },
-                        {
-                          type: text,
-                          text: address,
-                          color: '#ffffffcc'
-                        },
-                        {
-                          type: text,
-                          text: email,
-                          color:'#ffffffcc'
-                        },
-                        {
-                          type: text,
-                          text: date,
-                          color: '#ffffffcc'
-                        }
-                      ],
-                      spacing: sm
-                    }
-                  ]
-                }
-              ],
-              paddingAll : "20 px",
-              backgroundColor : '#FFFFFFFF'
-            }
+            
+            type: "bubble",
+            text: "名字:"+name+"\n電話:"+number+"\n地址:"+address+"\n信箱:"+email+"\n時間:"+date,
+
           },
         ])
         .then(() => {
@@ -144,7 +93,7 @@
         .catch((err) => {
           console.log("error", err);
         });
-      liff.closeWindow();
+        liff.closeWindow();
     }
 
     async function closeW() {
