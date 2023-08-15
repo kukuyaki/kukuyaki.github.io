@@ -14,7 +14,7 @@
 <body style="background-color:rgb(246, 250, 175);">
 
   <div class="col-12" style="margin: 10px">
-    <input namne="name" type="text" placeholder="輸名" id="name" class="form-control" autofocus required />
+    <input namne="name" type="text" placeholder="輸入姓名" id="name" class="form-control" autofocus required />
   </div>
   <div class="col-12" style="margin: 10px">
     <input namne="number" type="tel" placeholder="輸入電話" id="number" class="form-control" required />
@@ -27,7 +27,8 @@
   </div>
 
   <div id="radio">
-    <label><input type="radio" name="label" value="400M" checked="checked"><span class="round button">400M</span></label>
+    <label><input type="radio" name="label" value="400M" checked="checked"><span
+        class="round button">400M</span></label>
     <label><input type="radio" name="label" value="300M"><span class="round button">300M</span></label>
     <label><input type="radio" name="label" value="200M"><span class="round button">200M</span></label>
     <label><input type="radio" name="label" value="100M"><span class="round button">100M</span></label>
@@ -66,18 +67,21 @@
   <button id="btnMsg" onclick="closeW()">關閉</button>
 
   <script>
-    var user = liff.getDecodedIDToken();
-    var email = user.email;
 
     async function sendMsg() {
-      liff.sendMessages([
-        //推播訊息
-        {
-          type: 'text',
-          text: "hello, wagawaga"
-        }
-      ]);
-      liff.closeWindow();
+      liff
+        .sendMessages([
+          {
+            type: "text",
+            text: "Hello, World!",
+          },
+        ])
+        .then(() => {
+          console.log("message sent");
+        })
+        .catch((err) => {
+          console.log("error", err);
+        });
 
     }
 
