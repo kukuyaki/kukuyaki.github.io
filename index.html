@@ -14,7 +14,7 @@
 
 <body style="background-color:rgb(246, 250, 175);">
   <div class="col-12" style="margin: 10px">
-    <input namne="name" type="text" placeholder="輸入姓名" id="name" class="form-control" autofocus required />
+    <input namne="name" type="text" placeholder="輸入姓名AbbbAA" id="name" class="form-control" autofocus required />
   </div>
   <div class="col-12" style="margin: 10px">
     <input namne="number" type="tel" placeholder="輸入電話" id="number" class="form-control" required />
@@ -29,42 +29,45 @@
     <input namne="mail" type="date" id="date" class="form-control" required />
   </div>
 
-  <button id="btnMsg" onclick="sendMsg()">確認</button>
+  <button id="btnMsg" onclick="shareMsg()">確認</button>
   <button id="btnMsg" onclick="closeW()">關閉</button>
-  
+
   <script>
+    async function shareMsg() {
+      liff.shareTargetPicker([
+          {
+            "type": "flex",
+            "altText": `${urlParams.get('name')} present name card from Netlify`,
+            "contents": flexContent
+          }
+        ])
+        .then(function (res) {
+          if (res) {
+            // succeeded in sending a message through TargetPicker
+            console.log(`[${res.status}] Message sent!`);
+          } else {
+            // sending message canceled
+            console.log("TargetPicker was closed!");
+          }
+        })
+        .catch(function (error) {
+          // something went wrong before sending a message
+          console.log("something wrong happen");
+        });
+    }
     async function sendMsg() {
       const name = document.getElementById('name').value;
       const number = document.getElementById('number').value;
       const address = document.getElementById('address').value;
       const email = document.getElementById('email').value;
       const date = document.getElementById('date').value;
+
       liff
         .sendMessages([
           {
             type: "bubble",
-            // text: "名字:"+name+"\n電話:"+number+"\n地址:"+address+"\n信箱:"+email,
-            body: {
-              type: "box",
-              layout: "vertical",
-              contents: [
-                {
-                  type: "box",
-                  layout: "vertical",
-                  contents: [
-                    {
-                      type: "text",
-                  contents: [],
-                  size: "xl",
-                  wrap: true,
-                  text: "username",
-                  color: "#ffffff",
-                  weight: "bold"
-                    }
-                  ]
-                }
-              ]
-            }
+            text: "名字:" + name + "\n電話:" + number + "\n地址:" + address + "\n信箱:" + email,
+
           },
         ])
         .then(() => {
@@ -75,6 +78,7 @@
         });
       liff.closeWindow();
     }
+
     async function closeW() {
       liff.closeWindow();
     }
@@ -97,4 +101,5 @@
     main();
   </script>
 </body>
+
 </html>
