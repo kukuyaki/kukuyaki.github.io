@@ -10,8 +10,6 @@
 </head>
 
 <body>
-
-
   <p id="os"><b>OS:</b></p>
   <p id="language"><b>Language:</b></p>
   <p id="version"><b>Version:</b></p>
@@ -34,13 +32,74 @@
   <p id="universalLink2"><b>Universal Link with Query params:</b></p>
   <p><a href="liff/path/?param=9">Link to Path</a></p>
 
+  <div class="col-12" style="margin: 10px">
+    <label>姓名</label>
+    <input type="text" id="name" class="form-control" />
+
+  </div>
+
+  <button id="btnMsg" onclick="sendMsg()">Send Message</button>
+  <button id="btnShare" onclick="shareMsg()">Share Target Picker</button>
+  <button onclick="openWindow()">Open Window</button>
+  <button id="btnScanCode" onclick="scanCode()">Scan Code</button>
+  <button id="btnLogOut" onclick="logOut()">Log Out</button>
+  <button id="btnClose" onclick="closed()">Close</button>
+
+  <!-- <script src="js/vconsole.min.js"></script> -->
+  <!-- <script>
+    var vConsole = new VConsole()
+    console.log("Hello World!")
+  </script> -->
+
+  <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
   <script>
+    function createUniversalLink() { }
+
+    async function shareMsg() { }
+
+    function logOut() { }
+
+    function closed() { }
+
+    async function scanCode() { }
+
+    function openWindow() { }
+
+    async function getFriendship() { }
+
+    async function sendMsg() {
+
+      const name = document.getElementById('name').value;
+
+      liff.sendMessages([
+        //推播訊息
+        {
+          type: 'text',
+          text: name
+        }
+      ]);
+
+
+    }
+
+    function getContext() { }
+
+    async function getUserProfile() {
+      const profile = await liff.getProfile();
+      document.getElementById("pictureUrl").src = profile.pictureUrl;
+      document.getElementById("userId").append(profile.userId);
+      document.getElementById("displayName").append(profile.displayName);
+      msg = profile.displayName;
+      document.getElementById("statusMessage").append(profile.statusMessage);
+    }
+
+    //ดึงค่ามาdisplay
     function getEnvironment() {
-      document.getElementById("os").append(liff.getOS());
+      document.getElementById("os").append(liff.getOS()); //ใช้deviceอะไร
       document.getElementById("language").append(liff.getLanguage());
       document.getElementById("version").append(liff.getVersion());
       document.getElementById("accessToken").append(liff.getAccessToken());
-      document.getElementById("isInClient").append(liff.isInClient());
+      document.getElementById("isInClient").append(liff.isInClient()); //เปิดlineจากมือถือหรืออย่างอื่น
 
       if (liff.isInClient()) {
         document.getElementById("btnLogOut").style.display = "none";
