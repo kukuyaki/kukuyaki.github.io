@@ -1,5 +1,5 @@
 <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
-<script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+<script src="C:\Users\admin\dog\main.js"></script>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -20,7 +20,7 @@
     <input namne="number" type="tel" placeholder="輸入電話" id="number" class="form-control" required />
   </div>
   <div class="col-12" style="margin: 10px">
-    <input namne="address" type="text" placeholder="輸入地址" id="addre" class="form-control" required />
+    <input namne="address" type="text" placeholder="輸入地址" id="address" class="form-control" required />
   </div>
   <div class="col-12" style="margin: 10px">
     <input namne="mail" type="email" placeholder="輸入信箱" id="email" class="form-control" required />
@@ -69,11 +69,15 @@
   <script>
 
     async function sendMsg() {
+      const name = document.getElementById('name').value;
+      const number = document.getElementById('number').value;
+      const address = document.getElementById('address').value;
+      const email = document.getElementById('email').value;
       liff
         .sendMessages([
           {
             type: "text",
-            text: "Hello, World!",
+            text: "名字:"+name+"\n電話:"+number+"\n地址:"+address+"\n信箱:"+email,
           },
         ])
         .then(() => {
