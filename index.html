@@ -42,23 +42,28 @@
       liff
         .sendMessages([
           {
-            type: "bubble", body: {
-              type: "box", layout: "vertical",
-              contents: [{
-                type: "box", layout: "vertical",
-                contents: [{
-                  type: "box", layout: "vertical",
-                  contents: [{
-                    type: "text",
-                    contents: [], size: "xl", wrap: true, text: "name", color: "#ffffff", weight: "bold"
-                  },
-                  { type: "separator", margin: "xs" },
-                  { type: "text", text: "number", color: "#ffffffcc", size: "sm" },
-                  { type: "text", text: "address", color: "#ffffffcc" },
-                  { type: "text", text: "email", color: "#ffffffcc" },
-                  { type: "text", text: "date", color: "#ffffffcc" }], spacing: "sm"
-                }]
-              }], paddingAll: "20px", backgroundColor: "#464F69"
+            type: "bubble",
+            // text: "名字:"+name+"\n電話:"+number+"\n地址:"+address+"\n信箱:"+email,
+            body: {
+              type: "box",
+              layout: "vertical",
+              contents: [
+                {
+                  type: "box",
+                  layout: "vertical",
+                  contents: [
+                    {
+                      type: "text",
+                  contents: [],
+                  size: "xl",
+                  wrap: true,
+                  text: "username",
+                  color: "#ffffff",
+                  weight: "bold"
+                    }
+                  ]
+                }
+              ]
             }
           },
         ])
