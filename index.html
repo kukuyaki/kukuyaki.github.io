@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>拍yyy字</title>
+    <title>拍ttt文字</title>
 
        
 </head>
@@ -47,8 +47,7 @@
             const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
 
             // 将图像数据传递给OCR库进行文字识别
-            const recognizedText=performOCR(imageData);
-            resultDiv.textContent = recognizedText;
+            performOCR(imageData);
         });
         captureButton.addEventListener('click', async () => {
             getCameraStream();
@@ -59,8 +58,8 @@
             // 使用Tesseract.js来进行文字识别
             Tesseract.recognize(imageData, 'eng', { logger: m => console.log(m) })
             .then(({ data: { text } }) => {
-            var extractedText = text;
-            return extractedText;
+            var recognizedText = text;
+            resultDiv.textContent = recognizedText;
     })
 
             
