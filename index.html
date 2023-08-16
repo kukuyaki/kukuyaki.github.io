@@ -14,7 +14,9 @@
         const cameraFeed = document.getElementById('cameraFeed');
         const canvas = document.getElementById('canvas');
         const resultDiv = document.getElementById('result');
-        const constraints = { video: true };
+        
+        // 修改这里：设置使用的摄像头设备ID
+        const constraints = { video: { facingMode: 'environment' } };
 
         // 获取摄像头视频流
         async function getCameraStream() {
