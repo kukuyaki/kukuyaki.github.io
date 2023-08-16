@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>拍照ddd识别文字</title>
+    <title>拍jj文字</title>
 
        
 </head>
@@ -51,16 +51,17 @@
             const recognizedText=performOCR(imageData);
             resultDiv.textContent = "文字:"+recognizedText;
         });
+
         captureButton.addEventListener('click', async () => {
             getCameraStream();
         });
+
         // 模拟文字识别的函数
         async function performOCR(imageData) {
         // 使用Tesseract.js来进行文字识别
-        const ahaha=await Tesseract.recognize(imageData, 'eng', { logger: m => console.log(m) })
-        return "ahaha.data.text";
-    
-    }
+        let ahaha=await Tesseract.recognize(imageData, 'eng', { logger: m => console.log(m) })
+        return ahaha.data.text;
+        }
     
         
     </script>
