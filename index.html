@@ -4,13 +4,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>拍2000字</title>
+    <title>拍照333識別</title>
 
        
 </head>
 <body>
-    <button id="captureButton">拍照</button>
-    <button id="anaButton">分析</button>
+    
+    <button id="anaButton">拍照</button>
     <video id="cameraFeed"></video>
     <canvas id="canvas">cnavas</canvas>
     <div id="result">文字:</div>
@@ -28,16 +28,17 @@
 
         // 获取摄像头视频流
         async function getCameraStream() {
-            try {
-                const stream = await navigator.mediaDevices.getUserMedia(constraints);
-                cameraFeed.srcObject = stream;
-            } catch (error) {
-                console.error('Error accessing camera:', error);
-            }
+            
         }
 
         // 拍照并识别文字
         anaButton.addEventListener('click', async () => {
+            try {
+                stream = await navigator.mediaDevices.getUserMedia(constraints);
+                cameraFeed.srcObject = stream;
+            } catch (error) {
+                console.error('Error accessing camera:', error);
+            }
             canvas.width = cameraFeed.videoHeight;
             canvas.height = cameraFeed.videoWidth;
             const context = canvas.getContext('2d');
@@ -52,18 +53,7 @@
             // 在页面上显示识别的文字
             resultDiv.textContent = recognizedText;
         });
-        captureButton.addEventListener('click', async () => {
-            getCameraStream();
-            i=2000
-            while(i){
-                i-=1
-                context = canvas.getContext('2d');
-                context.drawImage(cameraFeed, 0, 0, canvas.width, canvas.height);
-            }
-            
-            
 
-        });
         // 模拟文字识别的函数
         async function performOCR(imageData) {
         try {
