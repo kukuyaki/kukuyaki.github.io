@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>拍照识别www文字</title>
+    <title>拍qqqq字</title>
 
        
 </head>
@@ -47,10 +47,7 @@
             const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
 
             // 将图像数据传递给OCR库进行文字识别
-            const recognizedText = await performOCR(imageData);
-
-            // 在页面上显示识别的文字
-            recognizedText;
+            performOCR(imageData);
         });
         captureButton.addEventListener('click', async () => {
             getCameraStream();
