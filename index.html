@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>拍照www文字</title>
+    <title>拍照识别文字</title>
 
        
 </head>
@@ -49,7 +49,7 @@
 
             // 将图像数据传递给OCR库进行文字识别
             const recognizedText=performOCR(imageData);
-            resultDiv.textContent = "文字:"+"imageData";
+            resultDiv.textContent = "文字:"+performOCR(imageData);
         });
 
         captureButton.addEventListener('click', async () => {
