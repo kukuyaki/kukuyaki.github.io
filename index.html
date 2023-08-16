@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>拍照识别文字556</title>
+    <title>拍照识别文字888</title>
     <style>
         body {
             display: flex;
@@ -93,9 +93,11 @@
             // 获取画布上的图像数据
             const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
 
+            // 将图像数据传递给OCR库进行文字识别
+            const recognizedText = await performOCR(imageData);
 
             // 在页面上显示识别的文字
-            resultDiv.textContent = imageData;
+            resultDiv.textContent = recognizedText;
         });
         //////////////////////////
         captureButton.addEventListener('click', async () => {
@@ -103,7 +105,21 @@
         });
         /////////////////////////////////////
         // 模拟文字识别的函数
-       
+        async function performOCR(imageData) {
+        try {
+            // 使用Tesseract.js来进行文字识别
+            console.log("yikeUwU");
+            console.log(imageData);
+            const { data: { text } } = await Tesseract.recognize(imageData, 'eng', { logger: m => console.log(m) });
+            console.log(text);
+
+            return text;
+        } catch (error) {
+            console.error('OCR error:', error);
+            return error;
+        }
+    }
+    
         
     </script>
 </body>
