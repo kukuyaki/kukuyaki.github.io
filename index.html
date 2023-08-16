@@ -3,61 +3,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>拍照识别文字888</title>
-    <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-            font-family: Arial, sans-serif;
-        }
-
-        #cameraFeed {
-            max-width: 100%;
-            border: 2px solid #333;
-            box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.5);
-        }
-
-        #captureButton {
-            margin-top: 16px;
-            padding: 10px 20px;
-            font-size: 18px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        #captureButton:hover {
-            background-color: #0056b3;
-        }
-        #anaButton {
-            margin-top: 16px;
-            padding: 10px 20px;
-            font-size: 18px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        #anaButton:hover {
-            background-color: #0056b3;
-        }
-        #result {
-            margin-top: 16px;
-            font-size: 18px;
-        }
-    </style>
+    <title>拍照识别文字555666</title>
 </head>
 <body>
     <button id="captureButton">拍照</button>
-    <button id="anaButton">分析</button>
+    <!-- <button id="anaButton">分析</button> -->
     <video id="cameraFeed" autoplay></video>
     <canvas id="canvas">cnavas</canvas>
     <div id="result">文字:</div>
@@ -65,7 +15,7 @@
 
     <script>
         const captureButton = document.getElementById('captureButton');
-        const anaButton = document.getElementById('anaButton');
+        // const anaButton = document.getElementById('anaButton');
         const cameraFeed = document.getElementById('cameraFeed');
         const canvas = document.getElementById('canvas');
         const resultDiv = document.getElementById('result');
@@ -84,42 +34,26 @@
         }
 
         // 拍照并识别文字
-        anaButton.addEventListener('click', async () => {
-            canvas.width = cameraFeed.videoWidth;
-            canvas.height = cameraFeed.videoHeight;
-            const context = canvas.getContext('2d');
-            context.drawImage(cameraFeed, 0, 0, canvas.width, canvas.height);
+        // anaButton.addEventListener('click', async () => {
+        //     canvas.width = cameraFeed.videoWidth;
+        //     canvas.height = cameraFeed.videoHeight;
+        //     const context = canvas.getContext('2d');
+        //     context.drawImage(cameraFeed, 0, 0, canvas.width, canvas.height);
 
-            // 获取画布上的图像数据
-            const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+        //     // 获取画布上的图像数据
+        //     const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
 
-            // 将图像数据传递给OCR库进行文字识别
-            const recognizedText = await performOCR(imageData);
 
-            // 在页面上显示识别的文字
-            resultDiv.textContent = recognizedText;
-        });
+        //     // 在页面上显示识别的文字
+        //     resultDiv.textContent = imageData;
+        // });
         //////////////////////////
         captureButton.addEventListener('click', async () => {
             getCameraStream();
         });
         /////////////////////////////////////
         // 模拟文字识别的函数
-        async function performOCR(imageData) {
-        try {
-            // 使用Tesseract.js来进行文字识别
-            console.log("yikeUwU");
-            console.log(imageData);
-            const { data: { text } } = await Tesseract.recognize(imageData, 'eng', { logger: m => console.log(m) });
-            console.log(text);
-
-            return text;
-        } catch (error) {
-            console.error('OCR error:', error);
-            return error;
-        }
-    }
-    
+       
         
     </script>
 </body>
