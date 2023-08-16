@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>拍照识别文88字</title>
+    <title>拍照识别99文字</title>
 
        
 </head>
@@ -38,8 +38,8 @@
 
         // 拍照并识别文字
         anaButton.addEventListener('click', async () => {
-            canvas.width = cameraFeed.videoWidth;
-            canvas.height = cameraFeed.videoHeight;
+            canvas.width = cameraFeed.videoHeight;
+            canvas.height = cameraFeed.videoWidth;
             const context = canvas.getContext('2d');
             context.drawImage(cameraFeed, 0, 0, canvas.width, canvas.height);
 
@@ -52,11 +52,9 @@
             // 在页面上显示识别的文字
             resultDiv.textContent = recognizedText;
         });
-        //////////////////////////
-        
-            
-        
-        /////////////////////////////////////
+        captureButton.addEventListener('click', async () => {
+            getCameraStream();
+        });
         // 模拟文字识别的函数
         async function performOCR(imageData) {
         try {
@@ -70,7 +68,7 @@
             return error;
         }
     }
-    getCameraStream();
+    
         
     </script>
 </body>
