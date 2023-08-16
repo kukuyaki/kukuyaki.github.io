@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>拍照识别文字444</title>
+    <title>拍照识别文字520</title>
     <style>
         body {
             display: flex;
@@ -57,7 +57,7 @@
 </head>
 <body>
     <button id="captureButton">拍照</button>
-    <!-- <button id="anaButton">分析</button> -->
+    <button id="anaButton">分析</button>
     <video id="cameraFeed" autoplay></video>
     <canvas id="canvas">cnavas</canvas>
     <div id="result">文字:</div>
@@ -65,7 +65,7 @@
 
     <script>
         const captureButton = document.getElementById('captureButton');
-        // const anaButton = document.getElementById('anaButton');
+        const anaButton = document.getElementById('anaButton');
         const cameraFeed = document.getElementById('cameraFeed');
         const canvas = document.getElementById('canvas');
         const resultDiv = document.getElementById('result');
@@ -84,24 +84,7 @@
         }
 
         // 拍照并识别文字
-        // anaButton.addEventListener('click', async () => {
-        //     canvas.width = cameraFeed.videoWidth;
-        //     canvas.height = cameraFeed.videoHeight;
-        //     const context = canvas.getContext('2d');
-        //     context.drawImage(cameraFeed, 0, 0, canvas.width, canvas.height);
-
-        //     // 获取画布上的图像数据
-        //     const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
-
-        //     // 将图像数据传递给OCR库进行文字识别
-        //     const recognizedText = await performOCR(imageData);
-
-        //     // 在页面上显示识别的文字
-        //     resultDiv.textContent = recognizedText;
-        // });
-        //////////////////////////
-        captureButton.addEventListener('click', async () => {
-            getCameraStream();
+        anaButton.addEventListener('click', async () => {
             canvas.width = cameraFeed.videoWidth;
             canvas.height = cameraFeed.videoHeight;
             const context = canvas.getContext('2d');
@@ -116,17 +99,23 @@
             // 在页面上显示识别的文字
             resultDiv.textContent = recognizedText;
         });
+        //////////////////////////
+        captureButton.addEventListener('click', async () => {
+            getCameraStream();
+        });
         /////////////////////////////////////
         // 模拟文字识别的函数
         async function performOCR(imageData) {
         try {
             // 使用Tesseract.js来进行文字识别
-            
+            console.log("yikeUwU");
+            console.log(imageData);
             const { data: { text } } = await Tesseract.recognize(imageData, 'eng', { logger: m => console.log(m) });
+            console.log(text);
 
             return text;
         } catch (error) {
-            // console.error('OCR error:', error);
+            console.error('OCR error:', error);
             return error;
         }
     }
