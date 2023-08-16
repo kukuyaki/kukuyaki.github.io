@@ -1,68 +1,55 @@
-
-
 <!DOCTYPE html>
 <html>
 <head>
-    <title>拍照识别文字測試</title>
-    
+    <title>文字识别</title>
+    <style>
+        /* 样式代码（与之前相同） */
+    </style>
 </head>
 <body>
-    <button id="captureButton">拍照</button>
+    <!-- 添加文件选择输入框 -->
+    <input type="file" accept="C:\\Users\\admin\\Desktop\\code\\py_pic\\其他\\ohNo.jpg" id="fileInput">
     <button id="anaButton">分析</button>
-    <video id="cameraFeed" autoplay></video>
-    <canvas id="canvas">cnavas</canvas>
+    <canvas id="canvas" style="display: none;"></canvas>
     <div id="result">文字:</div>
     <script src='https://cdn.jsdelivr.net/npm/tesseract.js@4/dist/tesseract.min.js'></script>
 
     <script>
-        const captureButton = document.getElementById('captureButton');
+        const fileInput = document.getElementById('fileInput');
         const anaButton = document.getElementById('anaButton');
-        const cameraFeed = document.getElementById('cameraFeed');
         const canvas = document.getElementById('canvas');
         const resultDiv = document.getElementById('result');
         
-       
-
-        
-
-        // 拍照并识别文字
+        // 选择文件后触发文字识别
         anaButton.addEventListener('click', async () => {
-            
-            const context = canvas.getContext('2d');
-            ala="C:\\Users\\admin\\Desktop\\code\\py_pic\\其他\\ch.jpg"
-            context.drawImage(ala, 0, 0, canvas.width, canvas.height);
+            if (fileInput.files.length > 0) {
+                const file = fileInput.files[0];
+                const image = new Image();
+                image.src = URL.createObjectURL(file);
 
-            // 获取画布上的图像数据
-            const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+                image.onload = async () => {
+                    canvas.width = image.width;
+                    canvas.height = image.height;
+                    const context = canvas.getContext('2d');
+                    context.drawImage(image, 0, 0, canvas.width, canvas.height);
 
-            // 将图像数据传递给OCR库进行文字识别
-            const recognizedText = await performOCR(imageData);
+                    const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+                    const recognizedText = await performOCR(imageData);
 
-            // 在页面上显示识别的文字
-            resultDiv.textContent = recognizedText;
+                    resultDiv.textContent = recognizedText;
+                };
+            }
         });
-        //////////////////////////
-        captureButton.addEventListener('click', async () => {
-            getCameraStream();
-        });
-        /////////////////////////////////////
-        // 模拟文字识别的函数
+
+        // 模拟文字识别的函数（与之前相同）
         async function performOCR(imageData) {
-        try {
-            // 使用Tesseract.js来进行文字识别
-            console.log("yikeUwU");
-            console.log(imageData);
-            const { data: { text } } = await Tesseract.recognize(imageData, 'eng', { logger: m => console.log(m) });
-            console.log(text);
-
-            return text;
-        } catch (error) {
-            console.error('OCR error:', error);
-            return error;
+            try {
+                const { data: { text } } = await Tesseract.recognize(imageData, 'eng', { logger: m => console.log(m) });
+                return text;
+            } catch (error) {
+                return error;
+            }
         }
-    }
-    
-        
     </script>
 </body>
 </html>
