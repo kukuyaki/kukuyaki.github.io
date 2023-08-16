@@ -17,6 +17,7 @@
     <script src='https://cdn.jsdelivr.net/npm/tesseract.js@4/dist/tesseract.min.js'></script>
 
     <script>
+        console.log("hi")
         const captureButton = document.getElementById('captureButton');
         const anaButton = document.getElementById('anaButton');
         const cameraFeed = document.getElementById('cameraFeed');
@@ -47,7 +48,8 @@
             const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
 
             // 将图像数据传递给OCR库进行文字识别
-            performOCR(imageData);
+            const recognizedText=performOCR(imageData);
+            resultDiv.textContent = recognizedText;
         });
         captureButton.addEventListener('click', async () => {
             getCameraStream();
@@ -57,7 +59,13 @@
         try {
             // 使用Tesseract.js来进行文字识别
             Tesseract.recognize(imageData, 'eng', { logger: m => console.log(m) })
-            .then(out => resultDiv.textContent = "hi") 
+            .then(out => {
+                console.log(out)
+                return out
+            // var extractedText = text;
+            // return extractedText;
+    })
+
             
         } catch (error) {
             console.error('OCR error:', error);
