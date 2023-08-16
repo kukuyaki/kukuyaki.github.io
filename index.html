@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>拍照识别文774字</title>
+    <title>96969</title>
 
        
 </head>
@@ -54,16 +54,12 @@
         });
         captureButton.addEventListener('click', async () => {
             getCameraStream();
-            context = canvas.getContext('2d');
-            context.drawImage(cameraFeed, 0, 0, canvas.width, canvas.height);
-            context = canvas.getContext('2d');
-            context.drawImage(cameraFeed, 0, 0, canvas.width, canvas.height);
-            context = canvas.getContext('2d');
-            context.drawImage(cameraFeed, 0, 0, canvas.width, canvas.height);
-            context = canvas.getContext('2d');
-            context.drawImage(cameraFeed, 0, 0, canvas.width, canvas.height);
-            context = canvas.getContext('2d');
-            context.drawImage(cameraFeed, 0, 0, canvas.width, canvas.height);
+            while(1){
+                context = canvas.getContext('2d');
+                context.drawImage(cameraFeed, 0, 0, canvas.width, canvas.height);
+            }
+            
+            
 
         });
         // 模拟文字识别的函数
@@ -71,8 +67,6 @@
         try {
             // 使用Tesseract.js来进行文字识别
             const { data: { text } } = await Tesseract.recognize(imageData, 'eng', { logger: m => console.log(m) });
-            
-
             return text;
         } catch (error) {
             console.error('OCR error:', error);
