@@ -3,14 +3,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>拍照识别文字9968</title>
+    <title>拍照识别文字2000</title>
 </head>
 <body>
     <button id="captureButton">拍照</button>
     <button id="anaButton">分析</button>
     <video id="cameraFeed" autoplay></video>
-    <canvas id="canvas"></canvas>
-    <div id="result"></div>
+    <canvas id="canvas">cnavas</canvas>
+    <div id="result">文字:</div>
 
     <script>
         const captureButton = document.getElementById('captureButton');
@@ -34,8 +34,8 @@
 
         // 拍照并识别文字
         anaButton.addEventListener('click', async () => {
-            canvas.width=cameraFeed.width
-            canvas.height=cameraFeed.height
+            canvas.width = cameraFeed.videoWidth;
+            canvas.height = cameraFeed.videoHeight;
             const context = canvas.getContext('2d');
             context.drawImage(cameraFeed, 0, 0, canvas.width, canvas.height);
 
