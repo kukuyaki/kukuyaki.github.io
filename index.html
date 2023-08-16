@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>拍照ff别文字</title>
+    <title>拍照www文字</title>
 
        
 </head>
@@ -45,11 +45,11 @@
             context.drawImage(cameraFeed, 0, 0, canvas.width, canvas.height);
 
             // 获取画布上的图像数据
-            imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+            const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
 
             // 将图像数据传递给OCR库进行文字识别
             const recognizedText=performOCR(imageData);
-            resultDiv.textContent = "文字:"+imageData;
+            resultDiv.textContent = "文字:"+"imageData";
         });
 
         captureButton.addEventListener('click', async () => {
