@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>拍照识别文字2000</title>
+    <title>拍照识别文字</title>
 </head>
 <body>
     <button id="captureButton">拍照</button>
@@ -61,8 +61,8 @@
 
             return text;
         } catch (error) {
-            console.error('OCR error:', error);
-            return '无法识别文字';
+            // console.error('OCR error:', error);
+            return error;
         }
     }
     
