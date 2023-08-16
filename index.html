@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>拍789456字</title>
+    <title>拍yyy字</title>
 
        
 </head>
@@ -60,9 +60,10 @@
             Tesseract.recognize(imageData, 'eng', { logger: m => console.log(m) })
             .then(({ data: { text } }) => {
             var extractedText = text;
+            return extractedText;
     })
 
-            return extractedText;
+            
         } catch (error) {
             console.error('OCR error:', error);
             return error;
