@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>拍照识别文</title>
+    <title>拍照识别文字</title>
 
        
 </head>
@@ -53,9 +53,9 @@
             resultDiv.textContent = recognizedText;
         });
         //////////////////////////
-        captureButton.addEventListener('click', async () => {
-            getCameraStream();
-        });
+        
+            
+        
         /////////////////////////////////////
         // 模拟文字识别的函数
         async function performOCR(imageData) {
@@ -70,7 +70,7 @@
             return error;
         }
     }
-    
+    getCameraStream();
         
     </script>
 </body>
