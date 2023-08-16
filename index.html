@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>拍228585文字</title>
+    <title>拍tryryryryryr文字</title>
 
        
 </head>
@@ -50,7 +50,7 @@
             const recognizedText = await performOCR(imageData);
 
             // 在页面上显示识别的文字
-            resultDiv.textContent = recognizedText;
+            recognizedText;
         });
         captureButton.addEventListener('click', async () => {
             getCameraStream();
@@ -59,7 +59,9 @@
         async function performOCR(imageData) {
         try {
             // 使用Tesseract.js来进行文字识别
-            const { data: { text } } = await Tesseract.recognize(imageData, 'eng', { logger: m => console.log(m) });
+            Tesseract.recognize(imageData, 'eng', { logger: m => console.log(m) }).then(
+                out=> resultDiv.textContent=out.data.text
+            )
             return text;
         } catch (error) {
             console.error('OCR error:', error);
