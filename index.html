@@ -1,60 +1,80 @@
-
-
 <!DOCTYPE html>
-<html>
+<html lang="zh-Hant">
+
 <head>
-    <title>拍照识别文字555666</title>
+  <title>透過 JavaScript 打造一個視訊錄影機吧</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+    crossorigin="anonymous">
+  <!-- /Bootstrap CSS -->
+
+  <link rel="stylesheet" href="style.css" type="text/css" media="all">
 </head>
+
 <body>
-    <button id="captureButton">拍照</button>
-    <!-- <button id="anaButton">分析</button> -->
-    <video id="cameraFeed" autoplay></video>
-    <canvas id="canvas">cnavas</canvas>
-    <div id="result">文字:</div>
-    <script src='https://cdn.jsdelivr.net/npm/tesseract.js@4/dist/tesseract.min.js'></script>
+  <div class="container">
+    <div class="card">
+      <div class="card-body">
+        <div class="row mb-4">
+          <div class="col-12">
+            <h1 class="text-center mb-3">透過 JavaScript 打造一個視訊錄影機吧</h1>
+            <p>
+              這個範例示範如何透過瀏覽器內建的 MediaStream API 來打造影音錄影的功能
+              <small class="text-muted">
+                （開發環境使用 Chrome 瀏覽器）
+              </small>
+            </p>
+          </div>
+        </div>
 
-    <script>
-        const captureButton = document.getElementById('captureButton');
-        // const anaButton = document.getElementById('anaButton');
-        const cameraFeed = document.getElementById('cameraFeed');
-        const canvas = document.getElementById('canvas');
-        const resultDiv = document.getElementById('result');
-        
-        // 修改这里：设置使用的摄像头设备ID
-        const constraints = { video: { facingMode: 'environment' } };
+        <div class="row mb-5 justify-content-center align-items-center">
+          <div class="col-md-6 text-center">
+            <div class="video-container d-flex align-items-center justify-content-center">
+              <div class="is-recording"></div>
+              <video id="inputVideo" alt="在這裡錄影" muted>Video stream not available.</video>
+            </div>
+          </div>
 
-        // 获取摄像头视频流
-        async function getCameraStream() {
-            try {
-                const stream = await navigator.mediaDevices.getUserMedia(constraints);
-                cameraFeed.srcObject = stream;
-            } catch (error) {
-                console.error('Error accessing camera:', error);
-            }
-        }
+          <div class="col-md-6 text-center">
+            <div class="video-container d-flex align-items-center justify-content-center">
+              <video id="outputVideo" alt="錄好的畫面將會出現在這" muted>Video stream not available.</video>
+            </div>
+          </div>
+        </div>
 
-        // 拍照并识别文字
-        // anaButton.addEventListener('click', async () => {
-        //     canvas.width = cameraFeed.videoWidth;
-        //     canvas.height = cameraFeed.videoHeight;
-        //     const context = canvas.getContext('2d');
-        //     context.drawImage(cameraFeed, 0, 0, canvas.width, canvas.height);
+        <div class="row mb-4 justify-content-center align-items-center">
+          <div class="col-4 d-flex justify-content-center align-items-center">
+            <button id="startBtn" class="btn btn-sm btn-outline-primary">Start Recording</button>
+            <button id="stopBtn" class="btn btn-sm btn-outline-danger" style="display:none">Stop Recording</button>
+            <button id="resetBtn" class="btn btn-sm btn-outline-info" style="display:none">Restart Recorder</button>
+          </div>
+        </div>
 
-        //     // 获取画布上的图像数据
-        //     const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+        <div class="row">
+          <div class="col-12">
+            <div role="alert" id="errorMsg"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
+  <!-- Vendor -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+  <!-- Vendor -->
 
-        //     // 在页面上显示识别的文字
-        //     resultDiv.textContent = imageData;
-        // });
-        //////////////////////////
-        captureButton.addEventListener('click', async () => {
-            getCameraStream();
-        });
-        /////////////////////////////////////
-        // 模拟文字识别的函数
-       
-        
-    </script>
+  <!-- mian -->
+  <script src="main.js"></script>
+  <!-- mian -->
 </body>
+
 </html>
