@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>拍照识aaa别文字</title>
+    <title>拍照识别文字</title>
 
        
 </head>
@@ -38,8 +38,8 @@
 
         // 拍照并识别文字
         anaButton.addEventListener('click', async () => {
-            canvas.width = cameraFeed.videoHeight;
-            canvas.height = cameraFeed.videoWidth;
+            canvas.width = cameraFeed.videoWidth;
+            canvas.height = cameraFeed.videoHeight;
             const context = canvas.getContext('2d');
             context.drawImage(cameraFeed, 0, 0, canvas.width, canvas.height);
 
