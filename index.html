@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>拍照识别文字</title>
+    <title>拍照777别文字</title>
 
        
 </head>
@@ -12,7 +12,7 @@
     <button id="captureButton">拍照</button>
     <button id="anaButton">分析</button>
     <video id="cameraFeed" autoplay></video>
-    <canvas id="canvas">cnavas</canvas>
+    <canvas id="canvas"></canvas>
     <div id="result">文字:</div>
     <script src='https://cdn.jsdelivr.net/npm/tesseract.js@4/dist/tesseract.min.js'></script>
 
@@ -38,8 +38,8 @@
 
         // 拍照并识别文字
         anaButton.addEventListener('click', async () => {
-            canvas.width = cameraFeed.videoWidth;
-            canvas.height = cameraFeed.videoHeight;
+            // canvas.width = cameraFeed.videoHeight;
+            // canvas.height = cameraFeed.videoWidth;
             const context = canvas.getContext('2d');
             context.drawImage(cameraFeed, 0, 0, canvas.width, canvas.height);
 
