@@ -3,16 +3,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>拍照识别文字123465</title>
+    <title>拍照识别文字996</title>
 </head>
 <body>
     <button id="captureButton">拍照</button>
+    <button id="anaButton">分析</button>
     <video id="cameraFeed" autoplay></video>
     <canvas id="canvas"></canvas>
     <div id="result"></div>
 
     <script>
         const captureButton = document.getElementById('captureButton');
+        const anaButton = document.getElementById('anaButton');
         const cameraFeed = document.getElementById('cameraFeed');
         const canvas = document.getElementById('canvas');
         const resultDiv = document.getElementById('result');
@@ -31,8 +33,7 @@
         }
 
         // 拍照并识别文字
-        captureButton.addEventListener('click', async () => {
-            getCameraStream();
+        anaButton.addEventListener('click', async () => {
             canvas.width=cameraFeed.width
             canvas.height=cameraFeed.height
             const context = canvas.getContext('2d');
@@ -47,7 +48,11 @@
             // 在页面上显示识别的文字
             resultDiv.textContent = recognizedText;
         });
-
+        //////////////////////////
+        captureButton.addEventListener('click', async () => {
+            getCameraStream();
+        });
+        /////////////////////////////////////
         // 模拟文字识别的函数
         async function performOCR(imageData) {
         try {
@@ -60,7 +65,7 @@
             return '无法识别文字';
         }
     }
-
+    
 
         // 启动摄像头
         
