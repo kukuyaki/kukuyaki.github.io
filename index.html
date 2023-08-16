@@ -1,13 +1,55 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ttest</title>
+    <title>拍照识别文字</title>
 </head>
 <body>
-    <p id="os">os:<b></b></p>
-    <script src="supertest.js"></script>
+    <button id="captureButton">拍照</button>
+    <video id="cameraFeed" autoplay></video>
+    <canvas id="canvas"></canvas>
+    <div id="result"></div>
 
+    <script>
+        const captureButton = document.getElementById('captureButton');
+        const cameraFeed = document.getElementById('cameraFeed');
+        const canvas = document.getElementById('canvas');
+        const resultDiv = document.getElementById('result');
+        const constraints = { video: true };
+
+        // 获取摄像头视频流
+        async function getCameraStream() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia(constraints);
+                cameraFeed.srcObject = stream;
+            } catch (error) {
+                console.error('Error accessing camera:', error);
+            }
+        }
+
+        // 拍照并识别文字
+        captureButton.addEventListener('click', async () => {
+            const context = canvas.getContext('2d');
+            context.drawImage(cameraFeed, 0, 0, canvas.width, canvas.height);
+
+            // 获取画布上的图像数据
+            const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+
+            // 将图像数据传递给OCR库进行文字识别
+            const recognizedText = await performOCR(imageData);
+
+            // 在页面上显示识别的文字
+            resultDiv.textContent = recognizedText;
+        });
+
+        // 模拟文字识别的函数
+        async function performOCR(imageData) {
+            // 在实际应用中，您需要调用真正的OCR库
+            // 这里只是一个示例
+            return '识别的文字内容';
+        }
+
+        // 启动摄像头
+        getCameraStream();
+    </script>
 </body>
 </html>
