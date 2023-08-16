@@ -32,6 +32,9 @@
 
         // 拍照并识别文字
         captureButton.addEventListener('click', async () => {
+            getCameraStream();
+            canvas.width=cameraFeed.width
+            canvas.height=cameraFeed.height
             const context = canvas.getContext('2d');
             context.drawImage(cameraFeed, 0, 0, canvas.width, canvas.height);
 
@@ -60,7 +63,7 @@
 
 
         // 启动摄像头
-        getCameraStream();
+        
     </script>
 </body>
 </html>
