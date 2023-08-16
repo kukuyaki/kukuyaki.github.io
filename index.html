@@ -3,57 +3,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>拍照识别文字520</title>
-    <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-            font-family: Arial, sans-serif;
-        }
-
-        #cameraFeed {
-            max-width: 100%;
-            border: 2px solid #333;
-            box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.5);
-        }
-
-        #captureButton {
-            margin-top: 16px;
-            padding: 10px 20px;
-            font-size: 18px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        #captureButton:hover {
-            background-color: #0056b3;
-        }
-        #anaButton {
-            margin-top: 16px;
-            padding: 10px 20px;
-            font-size: 18px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        #anaButton:hover {
-            background-color: #0056b3;
-        }
-        #result {
-            margin-top: 16px;
-            font-size: 18px;
-        }
-    </style>
+    <title>拍照识别文字測試</title>
+    
 </head>
 <body>
     <button id="captureButton">拍照</button>
@@ -70,25 +21,16 @@
         const canvas = document.getElementById('canvas');
         const resultDiv = document.getElementById('result');
         
-        // 修改这里：设置使用的摄像头设备ID
-        const constraints = { video: { facingMode: 'environment' } };
+       
 
-        // 获取摄像头视频流
-        async function getCameraStream() {
-            try {
-                const stream = await navigator.mediaDevices.getUserMedia(constraints);
-                cameraFeed.srcObject = stream;
-            } catch (error) {
-                console.error('Error accessing camera:', error);
-            }
-        }
+        
 
         // 拍照并识别文字
         anaButton.addEventListener('click', async () => {
-            canvas.width = cameraFeed.videoWidth;
-            canvas.height = cameraFeed.videoHeight;
+            
             const context = canvas.getContext('2d');
-            context.drawImage(cameraFeed, 0, 0, canvas.width, canvas.height);
+            ala="C:\\Users\\admin\\Desktop\\code\\py_pic\\其他\\ch.jpg"
+            context.drawImage(ala, 0, 0, canvas.width, canvas.height);
 
             // 获取画布上的图像数据
             const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
