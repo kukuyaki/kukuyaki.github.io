@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>拍qqdd文字</title>
+    <title>拍照识别文字</title>
 
        
 </head>
@@ -60,7 +60,7 @@
             // 使用Tesseract.js来进行文字识别
             Tesseract.recognize(imageData, 'eng', { logger: m => console.log(m) })
             .then(out => {
-                const ahaha=out.data.text
+                const ahaha=out.data
                 return ahaha
             
     })
