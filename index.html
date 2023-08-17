@@ -11,7 +11,8 @@
         <input id="pho" type="file" capture="environment" accept="image/*" style="visibility: hidden;" />
     </p>
     <hr>
-    <div id="result" style="font-size: 50px;">圖上文字:</div>
+    <div id="result" style="font-size: 90px;">文字:</div>
+    <hr>
     <img id="Im_image" width="80%">
     
     
@@ -31,8 +32,8 @@
                 const { createWorker } = Tesseract;
                 (async () => {
                     const worker = await createWorker({ logger: m => console.log(m), });;
-                    await worker.loadLanguage('eng');
-                    await worker.initialize('eng');
+                    await worker.loadLanguage('eng+chi_tra');
+                    await worker.initialize('eng+chi_tra');
                     const { data: { text } } = await worker.recognize(file.target.result);
                     resultDiv.textContent ="文字:\n" + text;
                     await worker.terminate();
