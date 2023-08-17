@@ -1,5 +1,13 @@
-<input type="file" capture="environment" accept="image/*" id="pho"/>
-<label for="pho" class="button-primary">客製選擇檔案按鈕8</label>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>take picture</title>
+
+       
+</head>
+<body style="color: rgb(226, 149, 82);">
+<label for="pho" class="button-primary">客製選擇檔案按鈕</label>
+<input id="pho" type="file" capture="environment" accept="image/*" />
 <img id="Im_image">
 <script>
     const input = document.getElementById('pho');
@@ -15,3 +23,5 @@
         reader.readAsDataURL(fileData[0]);
     }
 </script>
+</body>
+</html>
