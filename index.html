@@ -7,10 +7,11 @@
 </head>
 <body style="background-color: rgb(226, 149, 82);">
 <p>
-<label for="pho">客製選擇檔案按鈕</label>
+<label for="pho" style="border: 1cm; background-color: cadetblue;">拍照</label>
 <input id="pho" class="hidden" type="file" capture="environment" accept="image/*" style="display: none; visibility: hidden;"/>
 </p>
-<img id="Im_image">
+<hr>
+<img id="Im_image" style="display: none; visibility: hidden;">
 <script>
     const input = document.getElementById('pho');
     input1.addEventListener('change', handleFilesImage, false);
@@ -21,6 +22,7 @@
         reader.addEventListener('load', file => {
             const img = document.getElementById('Im_image');
             img.src = file.target.result;
+            img.style=""
             
         });
         reader.readAsDataURL(fileData[0]);
