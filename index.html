@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script src='https://cdn.jsdelivr.net/npm/tesseract.js@4/dist/tesseract.min.js'></script>
-<title>take444re</title>
+<script src='../node_modules/tesseract.js/'></script>
+<title>take picture</title>
 </head>
 <body style="background-color: rgb(193, 113, 64);">
 
@@ -17,8 +17,12 @@
 <div id="result">文字:</div>
 
 <script>
+var Tesseract = require('tesseract.js')
 const input = document.getElementById('pho');
 input.addEventListener('change', handleFilesImage, false);
+const { createWorker } = Tesseract;
+
+
 
 function handleFilesImage() {
     const fileData = this.files;
@@ -26,13 +30,17 @@ function handleFilesImage() {
     reader.addEventListener('load', file => {
     const img = document.getElementById('Im_image');
     img.src = file.target.result;
-    
-    const { data: { text } }=Tesseract.recognize(file.target.result)
-    console.log(data)
-    const res = document.getElementById("result");
-    res.textContent = text;
 
+    (async () => {
+    const worker = await createWorker();
+    await worker.loadLanguage('eng');
+    await worker.initialize('eng');
+    Tesseract.recognize(myImage)
+    .then(function(result){ console.log(result)
+})
+    })();
 });
+
 reader.readAsDataURL(fileData[0]);
 }
 </script>
