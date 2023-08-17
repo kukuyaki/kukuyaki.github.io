@@ -1,69 +1,17 @@
+<input type="file" capture="environment" accept="image/*" id="pho"/>
 
-<link href="htts://vjs.zencdn.net/5.19/video-js.min.css" rel="stylesheet">
-  <script src="htts://vjs.zencdn.net/5.19/video.min.js"></script>
-<!DOCTYPE html>
-<html>
-<head>
-    <title>拍照bb识别文字</title>
+<img id="Im_image">
+<script>
+    const input = document.getElementById('pho');
+    input1.addEventListener('change', handleFilesImage, false);
 
-       
-</head>
-<body>
-    <button id="captureButton">拍照</button>
-    <button id="anaButton">分析</button>
-    <video id="cameraFeed" width="320" height="450" controls autoplay></video>
-    <canvas id="canvas"></canvas>
-    <div id="result">文字:</div>
-    <script src='https://cdn.jsdelivr.net/npm/tesseract.js@4/dist/tesseract.min.js'></script>
-
-    <script>
-        console.log("hi")
-        const captureButton = document.getElementById('captureButton');
-        const anaButton = document.getElementById('anaButton');
-        const cameraFeed = document.getElementById('cameraFeed');
-        const canvas = document.getElementById('canvas');
-        const resultDiv = document.getElementById('result');
-        
-        // 修改这里：设置使用的摄像头设备ID
-        const constraints = { video: { facingMode: 'environment' } };
-
-        // 获取摄像头视频流
-        async function getCameraStream() {
-            try {
-                const stream = await navigator.mediaDevices.getUserMedia(constraints);
-                cameraFeed.srcObject = stream;
-            } catch (error) {
-                console.error('Error accessing camera:', error);
-            }
-        }
-
-        // 拍照并识别文字
-        anaButton.addEventListener('click', async () => {
-            canvas.width = cameraFeed.videoHeight;
-            canvas.height = cameraFeed.videoWidth;
-            const context = canvas.getContext('2d');
-            context.drawImage(cameraFeed, 0, 0, canvas.width, canvas.height);
-
-            // 获取画布上的图像数据
-            const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
-
-            // 将图像数据传递给OCR库进行文字识别
-            const recognizedText=performOCR(imageData);
-            resultDiv.textContent = "文字:"+recognizedText;
+    function handleFilesImage() {
+        const fileData = this.files;
+        const reader = new FileReader();
+        reader.addEventListener('load', file => {
+            const img = document.getElementById('Im_image');
+            img.src = file.target.result;
         });
-
-        captureButton.addEventListener('click', async () => {
-            getCameraStream();
-        });
-
-        // 模拟文字识别的函数
-        async function performOCR(imageData) {
-        // 使用Tesseract.js来进行文字识别
-        const { data: { text } }=await Tesseract.recognize(imageData, 'eng', { logger: m => console.log(m) })
-        return text;
-        }
-    
-        
-    </script>
-</body>
-</html>
+        reader.readAsDataURL(fileData[0]);
+    }
+</script>
