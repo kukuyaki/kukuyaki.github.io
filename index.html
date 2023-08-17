@@ -7,11 +7,11 @@
 </head>
 <body>
 <p>
-<label for="pho" style="border: 1cm; background-color: cadetblue;">拍照</label>
-<input id="pho" class="hidden" type="file" capture="environment" accept="image/*"/>
+<label for="pho" type="button" style="border: 1cm; background-color: rgb(194, 226, 227);">拍照</label>
+<input id="pho" type="file" capture="environment" accept="image/*"/>
 </p>
 <hr>
-<img id="Im_image" style="display: none; visibility: hidden;">圖片:
+<img id="Im_image">圖片:
 <script>
     const input = document.getElementById('pho');
     input1.addEventListener('change', handleFilesImage, false);
@@ -22,7 +22,7 @@
         reader.addEventListener('load', file => {
             const img = document.getElementById('Im_image');
             img.src = file.target.result;
-            img.style=""
+            
             
         });
         reader.readAsDataURL(fileData[0]);
