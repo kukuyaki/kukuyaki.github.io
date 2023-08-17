@@ -13,7 +13,7 @@
     <hr>
     <img id="Im_image" width="80%">
     <hr>
-    <div id="result">文字:</div>
+    <div id="result" style="font-size: 90px;">文字:</div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tesseract.js/4.1.1/tesseract.min.js"></script>
     <script>
         const input = document.getElementById('pho');
@@ -33,7 +33,7 @@
                     await worker.loadLanguage('eng');
                     await worker.initialize('eng');
                     const { data: { text } } = await worker.recognize(file.target.result);
-                    resultDiv.textContent = text;
+                    resultDiv.textContent ="文字:\n" + text;
                     await worker.terminate();
                 })();
             });
