@@ -1,49 +1,45 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<script src='../node_modules/tesseract.js/'></script>
-<title>take picture</title>
+    <title>take picture</title>
 </head>
+
 <body style="background-color: rgb(193, 113, 64);">
+    <p>
+        <label for="pho" style="font-size: 90px; background-color: rgb(194, 226, 227);">拍照</label>
+        <input id="pho" type="file" capture="environment" accept="image/*" style="visibility: hidden;" />
+    </p>
+    <hr>
+    <img id="Im_image" width="80%">
+    <hr>
+    <div id="result">文字:</div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tesseract.js/4.1.1/tesseract.min.js"></script>
+    <script>
+        const input = document.getElementById('pho');
+        const img = document.getElementById('Im_image');
+        const resultDiv = document.getElementById('result');
+        input.addEventListener('change', handleFilesImage, false);
 
-<p>
-<label for="pho" style="font-size: 90px; background-color: rgb(194, 226, 227);" >拍照</label>
-<input id="pho" type="file" capture="environment" accept="image/*" style="visibility: hidden;" />
-</p>
+        function handleFilesImage() {
+            const fileData = this.files;
+            const reader = new FileReader();
+            reader.addEventListener('load', file => {
+                img.src = file.target.result;
 
-<hr>
-<img id="Im_image" width="80%">
-<hr>
-<div id="result">文字:</div>
-
-<script>
-var Tesseract = require('tesseract.js')
-const input = document.getElementById('pho');
-input.addEventListener('change', handleFilesImage, false);
-const { createWorker } = Tesseract;
-
-
-
-function handleFilesImage() {
-    const fileData = this.files;
-    const reader = new FileReader();
-    reader.addEventListener('load', file => {
-    const img = document.getElementById('Im_image');
-    img.src = file.target.result;
-
-    (async () => {
-    const worker = await createWorker();
-    await worker.loadLanguage('eng');
-    await worker.initialize('eng');
-    Tesseract.recognize(myImage)
-    .then(function(result){ console.log(result)
-})
-    })();
-});
-
-reader.readAsDataURL(fileData[0]);
-}
-</script>
+                const { createWorker } = Tesseract;
+                (async () => {
+                    const worker = await createWorker({ logger: m => console.log(m), });;
+                    await worker.loadLanguage('eng');
+                    await worker.initialize('eng');
+                    const { data: { text } } = await worker.recognize(file.target.result);
+                    resultDiv.textContent = text;
+                    await worker.terminate();
+                })();
+            });
+            reader.readAsDataURL(fileData[0]);
+        }
+    </script>
 </body>
 
 </html>
