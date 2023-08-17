@@ -22,7 +22,7 @@
         const img = document.getElementById('Im_image');
         const resultDiv = document.getElementById('result');
         input.addEventListener('change', handleFilesImage, false);
-
+        resultDiv.textContent ="處理中...";
         function handleFilesImage() {
             const fileData = this.files;
             const reader = new FileReader();
