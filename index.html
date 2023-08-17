@@ -22,8 +22,9 @@
         const img = document.getElementById('Im_image');
         const resultDiv = document.getElementById('result');
         input.addEventListener('change', handleFilesImage, false);
-        resultDiv.textContent ="處理中...";
+        
         function handleFilesImage() {
+            resultDiv.textContent ="處理中...";
             const fileData = this.files;
             const reader = new FileReader();
             reader.addEventListener('load', file => {
