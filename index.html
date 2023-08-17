@@ -2,7 +2,7 @@
 <html>
 <head>
 <script src='https://cdn.jsdelivr.net/npm/tesseract.js@4/dist/tesseract.min.js'></script>
-<title>take picture</title>
+<title>take p666ure</title>
 </head>
 <body style="background-color: rgb(193, 113, 64);">
 
@@ -26,6 +26,7 @@ function handleFilesImage() {
     reader.addEventListener('load', file => {
     const img = document.getElementById('Im_image');
     img.src = file.target.result;
+    console.log(file.target.result)
     const { data: { text } }=Tesseract.recognize(file.target.result)
     console.log(text)
     const res = document.getElementById("result");
