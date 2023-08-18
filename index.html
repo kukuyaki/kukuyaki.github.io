@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>take picture</title>
+    <title>take dssdsdsdsde</title>
 </head>
 
 <body style="background-color: rgb(193, 113, 64);">
@@ -29,7 +29,8 @@
             const reader = new FileReader();
             reader.addEventListener('load', file => {
                 img.src = file.target.result;
-
+                console.log(file.target.result);
+                
                 const { createWorker } = Tesseract;
                 (async () => {
                     const worker = await createWorker({ logger: m => console.log(m), });;
@@ -37,7 +38,8 @@
                     await worker.initialize('eng+chi_tra');
                     const { data: { text } } = await worker.recognize(file.target.result);
                     resultDiv.textContent ="圖上文字:\n" + text;
-                    console.log(text)
+                    console.log(text);
+                    
                     await worker.terminate();
                 })();
             });
