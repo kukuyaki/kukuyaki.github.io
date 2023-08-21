@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>take picturff</title>
+    <title>take picturesss</title>
 </head>
 
 <body style="background-color: rgb(193, 113, 64);">
@@ -40,13 +40,12 @@
                 img_to_bi.src = file.target.result;
                 // 
                 img_to_bi.onload = function() {
-                // lol=300/img_to_bi.width;
-                canvas.width = img_to_bi.width/2;
-                canvas.height = img_to_bi.height/2;
+                canvas.width = img_to_bi.width;
+                canvas.height = img_to_bi.height;
 
                 ctx.drawImage(img_to_bi, 0, 0);
 
-                const imageData = ctx.getImageData(0, 0, img_to_bi.width/2, img_to_bi.height/2);
+                const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
                 const data = imageData.data;
 
                     //二值化
@@ -59,7 +58,7 @@
 
                 ctx.putImageData(imageData, 0, 0);
 
-                const binaryDataURL = canvas.toDataURL('image/png');
+                const binaryDataURL = canvas.toDataURL('image/png',0.7);
                 img_to_bi.src=binaryDataURL
                 img.src=binaryDataURL
                 // Now you can use binaryDataURL as needed, e.g., set it as the src of an img element
