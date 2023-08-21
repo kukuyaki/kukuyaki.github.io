@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>take picturesss</title>
+    <title>take pictureTTs</title>
 </head>
 
 <body style="background-color: rgb(193, 113, 64);">
@@ -11,7 +11,7 @@
         <input id="pho" capture="environment" type="file" accept="image/*" style="visibility: hidden;" />
     </p>
     <hr>
-    <div id="result" style="font-size: 50px; " alt="使用圖片" title="被偵測圖片">文字:</div>
+    <div id="result" style="font-size: 50px; " alt="使用圖片" title="被偵測圖片">圖上文字:</div>
     <hr>
     <img id="Im_image" width="50%">
 
@@ -26,25 +26,53 @@
 
         const canvas = document.createElement('canvas');
         const ctx = canvas.getContext('2d');
+        const img_to_bi = new Image();
 
         function handleFilesImage() {
-            resultDiv.textContent = "文字:處理中...";
+            img.src=""
+            resultDiv.textContent = "文字處理中...";
             const fileData = this.files;
             const reader = new FileReader();
             reader.readAsDataURL(fileData[0]);
 
             reader.addEventListener('load', file => {
                 img.src = file.target.result;
-                
+                img_to_bi.src = file.target.result;
+                // 
+                img_to_bi.onload = function() {
+                lol=300/img_to_bi.width;
+                canvas.width = 300;
+                canvas.height = img_to_bi.height*300/img_to_bi.width;
+
+                ctx.drawImage(img_to_bi, 0, 0);
+
+                const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                const data = imageData.data;
+
+                    //二值化
+                for (let i = 0; i < data.length; i += 4) {
+                    const grayscale = data[i] * 0.299 + data[i + 1] * 0.587 + data[i + 2] * 0.114;
+                    const binaryValue = grayscale > 128 ? 255 : 0;
                     
+                    data[i] = data[i + 1] = data[i + 2] = binaryValue;
+                }
+
+                ctx.putImageData(imageData, 0, 0);
+
+                const binaryDataURL = canvas.toDataURL('image/png');
+                img_to_bi.src=binaryDataURL
+                img.src=binaryDataURL
+                // Now you can use binaryDataURL as needed, e.g., set it as the src of an img element
+            };
+
                 //辨識文字
                 const { createWorker } = Tesseract;
                 (async () => {
-                    const worker = await createWorker({ logger: m => console.log(m), });
-                    await worker.loadLanguage('eng');
-                    await worker.initialize('eng');
-                    const { data: { text } } = await worker.recognize(file.target.result);
-                    resultDiv.textContent = "文字:\n" + text;
+                    const worker = await createWorker({ logger: m => console.log(m), });;
+                    await worker.loadLanguage('eng+chi_tra');
+                    await worker.initialize('eng+chi_tra');
+                    const { data: { text } } = await worker.recognize(img_to_bi.src);
+                    resultDiv.textContent = "圖上文字:\n" + text;
                     console.log(text);
 
                     await worker.terminate();
