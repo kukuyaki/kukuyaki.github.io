@@ -11,7 +11,7 @@
         <input id="pho" capture="environment" type="file" accept="image/*" style="visibility: hidden;" />
     </p>
     <hr>
-    <div id="result" style="font-size: 50px; " alt="使用圖片" title="被偵測圖片">圖上文字:</div>
+    <div id="result" style="font-size: 50px; " alt="使用圖片" title="被偵測圖片">文字:</div>
     <hr>
     <img id="Im_image" width="50%">
 
@@ -26,10 +26,9 @@
 
         const canvas = document.createElement('canvas');
         const ctx = canvas.getContext('2d');
-        const img_to_bi = new Image();
 
         function handleFilesImage() {
-            resultDiv.textContent = "文字處理中...";
+            resultDiv.textContent = "文字:處理中...";
             const fileData = this.files;
             const reader = new FileReader();
             reader.readAsDataURL(fileData[0]);
@@ -44,7 +43,7 @@
                     const worker = await createWorker({ logger: m => console.log(m), });
                     await worker.loadLanguage('eng+chi_tra');
                     await worker.initialize('eng+chi_tra');
-                    const { data: { text } } = await worker.recognize(img.src);
+                    const { data: { text } } = await worker.recognize(file.target.result);
                     resultDiv.textContent = "圖上文字:\n" + text;
                     console.log(text);
 
