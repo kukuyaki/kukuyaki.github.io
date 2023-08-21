@@ -8,7 +8,7 @@
 <body>
     <button id="captureButton">拍照</button>
     <video id="cameraPreview" autoplay></video>
-    <img id="capturedImage" style="display: none;">
+    <img id="capturedImage" >
     
     <script>
         const captureButton = document.getElementById('captureButton');
@@ -34,7 +34,6 @@
 
                 // 将捕捉到的照片展示在瀏覽器上
                 capturedImage.src = capturedImageDataURL;
-                capturedImage.style.display = 'block';
 
                 // 关闭摄像头视频流
                 mediaStream.getTracks().forEach(track => track.stop());
