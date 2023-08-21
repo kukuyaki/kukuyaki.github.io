@@ -1,68 +1,52 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <title>Camera Photo and Text Recognition</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 0;
-            padding: 0;
+    <title>take picturesss</title>
+</head>
+
+<body style="background-color: rgb(193, 113, 64);">
+    <p>
+        <label for="pho" style="font-size: 90px; background-color: rgb(194, 226, 227);">點此拍照</label>
+        <input id="pho" capture="environment" type="file" accept="image/*" style="visibility: hidden;" />
+    </p><!--  capture="environment" -->
+    <hr>
+    <div id="result" style="font-size: 50px; " alt="使用圖片" title="被偵測圖片">圖上文字:</div>
+    <hr>
+    <img id="Im_image" width="100%">
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tesseract.js/4.1.1/tesseract.min.js"></script>
+    <script>
+        const input = document.getElementById('pho');
+        const img = document.getElementById('Im_image');
+        const resultDiv = document.getElementById('result');
+        input.addEventListener('change', handleFilesImage, false);
+
+        function handleFilesImage() {
+            resultDiv.textContent = "文字處理中...";
+            const fileData = this.files;
+            const reader = new FileReader();
+            reader.addEventListener('load', file => {
+                img.src = file.target.result;
+                console.log(file.target.result);
+
+                const { createWorker } = Tesseract;
+                (async () => {
+                    const worker = await createWorker({ logger: m => console.log(m), });;
+                    await worker.loadLanguage('eng+chi_tra');
+                    await worker.initialize('eng+chi_tra');
+                    const { data: { text } } = await worker.recognize(file.target.result);
+                    resultDiv.textContent = "圖上文字:\n" + text;
+                    console.log(text);
+
+                    await worker.terminate();
+                })();
+            });
+            reader.readAsDataURL(fileData[0]);
         }
         
-        #imageContainer {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-    </style>
-</head>
-<body>
-    <h1>Camera Photo and Text Recognition</h1>
-    <div id="imageContainer">
-        <button id="captureButton">Capture Photo</button>
-        <img id="capturedImage" style="display: none;">
-        <p id="recognizedText"></p>
-    </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const captureButton = document.getElementById('captureButton');
-            const capturedImage = document.getElementById('capturedImage');
-            const recognizedText = document.getElementById('recognizedText');
-
-            captureButton.addEventListener('click', async () => {
-                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-                capturedImage.style.display = 'block';
-                capturedImage.srcObject = stream;
-
-                const canvas = document.createElement('canvas');
-                const context = canvas.getContext('2d');
-                canvas.width = capturedImage.videoWidth;
-                canvas.height = capturedImage.videoHeight;
-                context.drawImage(capturedImage, 0, 0, canvas.width, canvas.height);
-
-                // Preprocess image (e.g., resize, grayscale, threshold)
-                // Here you can add your canvas image processing code using the Canvas API
-
-                // Convert canvas content to base64 data URL
-                const imageDataUrl = canvas.toDataURL('image/jpeg');
-
-                // Perform text recognition using Tesseract.js
-                Tesseract.recognize(
-                    imageDataUrl,
-                    'eng', // language code for English
-                    { logger: m => console.log(m) } // logger to see progress and results
-                ).then(({ data: { text } }) => {
-                    recognizedText.textContent = text;
-                });
-
-                // Stop the camera stream
-                stream.getTracks().forEach(track => track.stop());
-            });
-        });
     </script>
-
-    <script src="https://cdn.jsdelivr.net/npm/tesseract.js"></script>
 </body>
+
 </html>
