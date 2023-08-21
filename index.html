@@ -2,48 +2,47 @@
 <html lang="en">
 
 <head>
-    <title>Camera ddddw</title>
+    <title>Camera Capture</title>
 </head>
 
 <body>
-  <input id="pho" capture="environment" type="file" accept="image/*"/>
-
+    <button id="captureButton">拍照</button>
+    <video id="cameraPreview" autoplay></video>
+    <img id="capturedImage" style="display: none;">
+    
     <script>
         const captureButton = document.getElementById('captureButton');
-const videoElement = document.getElementById('cameraPreview');
-
-captureButton.addEventListener('click', async () => {
-    try {
-        const mediaStream = await navigator.mediaDevices.getUserMedia({ video: true });
-
-        // 将摄像头视频流显示在 video 元素中
-        videoElement.srcObject = mediaStream;
-        videoElement.play();
-
-        // 在拍照按钮点击时，获取当前视频帧作为图片
-        const canvas = document.createElement('canvas');
-        canvas.width = videoElement.videoWidth;
-        canvas.height = videoElement.videoHeight;
-        const ctx = canvas.getContext('2d');
-        ctx.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+        const cameraPreview = document.getElementById('cameraPreview');
+        const capturedImage = document.getElementById('capturedImage');
         
-        const capturedImageDataURL = canvas.toDataURL('image/jpeg');
+        captureButton.addEventListener('click', async () => {
+            try {
+                const mediaStream = await navigator.mediaDevices.getUserMedia({ video: true });
+                
+                cameraPreview.srcObject = mediaStream;
+                cameraPreview.play();
 
-        // 关闭摄像头视频流
-        mediaStream.getTracks().forEach(track => track.stop());
+                // 在拍照按钮点击时，获取当前视频帧作为图片
+                const canvas = document.createElement('canvas');
+                const minSize = Math.min(cameraPreview.videoWidth, cameraPreview.videoHeight);
+                canvas.width = minSize;
+                canvas.height = minSize;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(cameraPreview, (cameraPreview.videoWidth - minSize) / 2, (cameraPreview.videoHeight - minSize) / 2, minSize, minSize, 0, 0, minSize, minSize);
 
-        // 使用 capturedImageDataURL，例如显示在页面上或上传到服务器
-        // ...
-    } catch (error) {
-        console.error('Error accessing camera:', error);
-    }
-});
+                const capturedImageDataURL = canvas.toDataURL('image/jpeg');
 
+                // 将捕捉到的照片展示在瀏覽器上
+                capturedImage.src = capturedImageDataURL;
+                capturedImage.style.display = 'block';
+
+                // 关闭摄像头视频流
+                mediaStream.getTracks().forEach(track => track.stop());
+            } catch (error) {
+                console.error('Error accessing camera:', error);
+            }
+        });
     </script>
 </body>
 
 </html>
-
-
-
-
