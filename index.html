@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>take peeeeeeess</title>
+    <title>take picturesss</title>
 </head>
 
 <body style="background-color: rgb(193, 113, 64);">
@@ -40,8 +40,9 @@
                 img_to_bi.src = file.target.result;
                 // 降解
                 img_to_bi.onload = function() {
-                canvas.width = 800;
-                canvas.height = img_to_bi.height*800/img_to_bi.width;
+                resoluti=300
+                canvas.width = resoluti;
+                canvas.height = img_to_bi.height*resoluti/img_to_bi.width;
 
                 ctx.drawImage(img_to_bi, 0, 0, canvas.width, canvas.height);
 
