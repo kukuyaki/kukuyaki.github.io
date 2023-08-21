@@ -1,122 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <title>MediaCapture and Streams API</title>
-    <meta name="viewport" content="width=device-width">
-    <link rel="stylesheet" href="main.css">
+    <title>takejjjkkk</title>
 </head>
-<body>
-    <header>
-        <h1>MediaCapture, MediaRecorder and Streams API</h1>
-    </header>
-    <main>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Impedit molestiae itaque facere totam saepe tempore esse temporibus, quae reprehenderit aliquid iusto ea laborum, iure eligendi odio exercitationem sapiente illum quos.</p>
-        
-        <p><button id="btnStart">START RECORDING</button><br/>
-        <button id="btnStop">STOP RECORDING</button></p>
-        
-        <video controls></video>
-        
-        <video id="vid2" controls></video>
-        
-        <!-- could save to canvas and do image manipulation and saving too -->
-    </main>    
+
+<body style="background-color: rgb(193, 113, 64);">
+    <p>
+        <label for="pho" style="font-size: 90px; background-color: rgb(194, 226, 227);">點此拍照</label>
+        <input id="pho" capture="environment" type="file" accept="image/*" style="visibility: hidden;" />
+    </p>
+    <hr>
+    <div id="result" style="font-size: 50px; " alt="使用圖片" title="被偵測圖片">圖上文字:</div>
+    <hr>
+    <img id="Im_image" width="50%">
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tesseract.js/4.1.1/tesseract.min.js"></script>
     <script>
         
-        let constraintObj = { 
-            audio: false, 
-            video: { 
-                facingMode: "user", 
-                width: { min: 640, ideal: 1280, max: 1920 },
-                height: { min: 480, ideal: 720, max: 1080 } 
-            } 
-        }; 
-        // width: 1280, height: 720  -- preference only
-        // facingMode: {exact: "user"}
-        // facingMode: "environment"
+        const input = document.getElementById('pho');
+        const img = document.getElementById('Im_image');
+        const resultDiv = document.getElementById('result');
         
-        //handle older browsers that might implement getUserMedia in some way
-        if (navigator.mediaDevices === undefined) {
-            navigator.mediaDevices = {};
-            navigator.mediaDevices.getUserMedia = function(constraintObj) {
-                let getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
-                if (!getUserMedia) {
-                    return Promise.reject(new Error('getUserMedia is not implemented in this browser'));
-                }
-                return new Promise(function(resolve, reject) {
-                    getUserMedia.call(navigator, constraintObj, resolve, reject);
-                });
-            }
-        }else{
-            navigator.mediaDevices.enumerateDevices()
-            .then(devices => {
-                devices.forEach(device=>{
-                    console.log(device.kind.toUpperCase(), device.label);
-                    //, device.deviceId
-                })
-            })
-            .catch(err=>{
-                console.log(err.name, err.message);
-            })
-        }
+        input.addEventListener('change', handleFilesImage, false);
 
-        navigator.mediaDevices.getUserMedia(constraintObj)
-        .then(function(mediaStreamObj) {
-            //connect the media stream to the first video element
-            let video = document.querySelector('video');
-            if ("srcObject" in video) {
-                video.srcObject = mediaStreamObj;
-            } else {
-                //old version
-                video.src = window.URL.createObjectURL(mediaStreamObj);
-            }
-            
-            video.onloadedmetadata = function(ev) {
-                //show in the video element what is being captured by the webcam
-                video.play();
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        const img_to_bi = new Image();
+
+        function handleFilesImage() {
+            img.src=""
+            resultDiv.textContent = "文字:處理中...";
+            const fileData = this.files;
+            const reader = new FileReader();
+            reader.readAsDataURL(fileData[0]);
+
+            reader.addEventListener('load', file => {
+                img.src = file.target.result;
+                img_to_bi.src = file.target.result;
+                // 降解
+                img_to_bi.onload = function() {
+                resoluti=231
+                canvas.width = resoluti;
+                canvas.height = img_to_bi.height*resoluti/img_to_bi.width;
+
+                ctx.drawImage(img_to_bi, 0, 0, canvas.width, canvas.height);
+
+                const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                const data = imageData.data;
+
+                    //二值化
+                for (let i = 0; i < data.length; i += 4) {
+                    const grayscale = data[i] * 0.299 + data[i + 1] * 0.587 + data[i + 2] * 0.114;
+                    const binaryValue = grayscale > 128 ? 255 : 0;
+                    
+                    data[i] = data[i + 1] = data[i + 2] = binaryValue;
+                }
+
+                ctx.putImageData(imageData, 0, 0);
+
+                const binaryDataURL = canvas.toDataURL('image/png');
+                img_to_bi.src=binaryDataURL
+                img.src=binaryDataURL
+                // Now you can use binaryDataURL as needed, e.g., set it as the src of an img element
             };
-            
-            //add listeners for saving video/audio
-            let start = document.getElementById('btnStart');
-            let stop = document.getElementById('btnStop');
-            let vidSave = document.getElementById('vid2');
-            let mediaRecorder = new MediaRecorder(mediaStreamObj);
-            let chunks = [];
-            
-            start.addEventListener('click', (ev)=>{
-                mediaRecorder.start();
-                console.log(mediaRecorder.state);
-            })
-            stop.addEventListener('click', (ev)=>{
-                mediaRecorder.stop();
-                console.log(mediaRecorder.state);
+
+                //辨識文字
+                const { createWorker } = Tesseract;
+                (async () => {
+                    const worker = await createWorker({ logger: m => console.log(m), });;
+                    await worker.loadLanguage('eng');
+                    await worker.initialize('eng');
+                    const { data: { text } } = await worker.recognize(img_to_bi.src);
+                    resultDiv.textContent = "文字:\n" + text;
+                    console.log(text);
+
+                    await worker.terminate();
+                             })();
             });
-            mediaRecorder.ondataavailable = function(ev) {
-                chunks.push(ev.data);
-            }
-            mediaRecorder.onstop = (ev)=>{
-                let blob = new Blob(chunks, { 'type' : 'video/mp4;' });
-                chunks = [];
-                let videoURL = window.URL.createObjectURL(blob);
-                vidSave.src = videoURL;
-            }
-        })
-        .catch(function(err) { 
-            console.log(err.name, err.message); 
-        });
+            
+        }
         
-        /*********************************
-        getUserMedia returns a Promise
-        resolve - returns a MediaStream Object
-        reject returns one of the following errors
-        AbortError - generic unknown cause
-        NotAllowedError (SecurityError) - user rejected permissions
-        NotFoundError - missing media track
-        NotReadableError - user permissions given but hardware/OS error
-        OverconstrainedError - constraint video settings preventing
-        TypeError - audio: false, video: false
-        *********************************/
     </script>
 </body>
+
 </html>
