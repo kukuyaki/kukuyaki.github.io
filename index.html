@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>take pictureTTs</title>
+    <title>take picturff</title>
 </head>
 
 <body style="background-color: rgb(193, 113, 64);">
@@ -40,13 +40,13 @@
                 img_to_bi.src = file.target.result;
                 // 
                 img_to_bi.onload = function() {
-                lol=300/img_to_bi.width;
-                canvas.width = 300;
-                canvas.height = img_to_bi.height*300/img_to_bi.width;
+                // lol=300/img_to_bi.width;
+                canvas.width = img_to_bi.width/2;
+                canvas.height = img_to_bi.height/2;
 
                 ctx.drawImage(img_to_bi, 0, 0);
 
-                const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                const imageData = ctx.getImageData(0, 0, img_to_bi.width/2, img_to_bi.height/2);
                 const data = imageData.data;
 
                     //二值化
