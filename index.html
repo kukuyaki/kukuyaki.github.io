@@ -1,28 +1,42 @@
+<!-- 目前最成功的版本 -->
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <title>takewwwwwsss</title>
+    <style>
+        .parent {
+            display: flex;
+            /* 水平置中 */
+            justify-content: center;
+            /* 垂直置中 */
+            
+            flex-wrap: wrap;
+        }
+    </style>
+    <title>take HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH</title>
 </head>
 
 <body style="background-color: rgb(193, 113, 64);">
-    <p>
-        <label for="pho" style="font-size: 90px; background-color: rgb(194, 226, 227);">點此拍照</label>
-        <input id="pho" capture="environment" type="file" accept="image/*" style="visibility: hidden;" />
-    </p>
-    <hr>
-    <div id="result" style="font-size: 50px; " alt="使用圖片" title="被偵測圖片">圖上文字:</div>
-    <hr>
-    <img id="Im_image" width="30%">
+    <div >
+        <p >
+            <label class="parent" for="pho" style="font-size: 90px; background-color: rgb(194, 226, 227);">點此拍照</label>
+            <input id="pho" capture="environment" type="file" accept="image/*" style="visibility: hidden;" />
+        </p>
+        <hr>
+        <div class="parent" id="result" style="font-size: 50px; " alt="使用圖片" title="被偵測圖片">圖上文字:</div>
+        <hr>
+        <img style="display:block; margin:auto;" id="Im_image" width="75%">
+    </div>
+
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tesseract.js/4.1.1/tesseract.min.js"></script>
     <script>
-        
+
         const input = document.getElementById('pho');
         const img = document.getElementById('Im_image');
         const resultDiv = document.getElementById('result');
-        
+
         input.addEventListener('change', handleFilesImage, false);
 
         const canvas = document.createElement('canvas');
@@ -30,7 +44,7 @@
         const img_to_bi = new Image();
 
         function handleFilesImage() {
-            img.src=""
+            img.src = ""
             resultDiv.textContent = "文字:處理中...";
             const fileData = this.files;
             const reader = new FileReader();
@@ -40,31 +54,34 @@
                 img.src = file.target.result;
                 img_to_bi.src = file.target.result;
                 // 降解
-                img_to_bi.onload = function() {
-                resoluti=500
-                canvas.width = resoluti;
-                canvas.height = img_to_bi.height*resoluti/img_to_bi.width;
-                
-                ctx.drawImage(img_to_bi, 0, 0, canvas.width, canvas.height);
+                img_to_bi.onload = function () {
+                    resoluti = 500
+                    canvas.width = resoluti;
+                    canvas.height = img_to_bi.height * resoluti / img_to_bi.width;
 
-                const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-                const data = imageData.data;
+                    ctx.drawImage(img_to_bi, 0, 0, canvas.width, canvas.height);
+
+                    const imageData = ctx.getImageData(0, canvas.height*0.4, canvas.width, canvas.height*0.2);
+                    ctx.clearRect(0, 0, canvas.width, canvas.height*0.4)
+                    ctx.clearRect(0, canvas.height*0.6, canvas.width, canvas.height)
+
+                    const data = imageData.data;
 
                     //二值化
-                for (let i = 0; i < data.length; i += 4) {
-                    const grayscale = data[i] * 0.299 + data[i + 1] * 0.587 + data[i + 2] * 0.114;
-                    const binaryValue = grayscale > 128 ? 255 : 0;
-                    
-                    data[i] = data[i + 1] = data[i + 2] = binaryValue;
-                }
+                    for (let i = 0; i < data.length; i += 4) {
+                        const grayscale = data[i] * 0.299 + data[i + 1] * 0.587 + data[i + 2] * 0.114;
+                        const binaryValue = grayscale > 128 ? 255 : 0;
 
-                ctx.putImageData(imageData, 0, 0);
+                        data[i] = data[i + 1] = data[i + 2] = binaryValue;
+                    }
 
-                const binaryDataURL = canvas.toDataURL('image/png');
-                img_to_bi.src=binaryDataURL
-                img.src=binaryDataURL
-                // Now you can use binaryDataURL as needed, e.g., set it as the src of an img element
-            };
+                    ctx.putImageData(imageData, 0, canvas.height*0.4);
+
+                    const binaryDataURL = canvas.toDataURL('image/png');
+                    img_to_bi.src = binaryDataURL
+                    img.src = binaryDataURL
+                    // Now you can use binaryDataURL as needed, e.g., set it as the src of an img element
+                };
 
                 //辨識文字
                 const { createWorker } = Tesseract;
@@ -73,15 +90,15 @@
                     await worker.loadLanguage('eng');
                     await worker.initialize('eng');
                     const { data: { text } } = await worker.recognize(img_to_bi.src);
-                    resultDiv.textContent = "文字:\n" + text;
+                    resultDiv.textContent = text;
                     console.log(text);
 
                     await worker.terminate();
-                             })();
+                })();
             });
-            
+
         }
-        
+
     </script>
 </body>
 
