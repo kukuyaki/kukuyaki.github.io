@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>take picturegg</title>
+    <title>take picturesss</title>
 </head>
 
 <body style="background-color: rgb(193, 113, 64);">
@@ -41,10 +41,10 @@
                 const { createWorker } = Tesseract;
                 (async () => {
                     const worker = await createWorker({ logger: m => console.log(m), });
-                    await worker.loadLanguage('eng+chi_tra');
-                    await worker.initialize('eng+chi_tra');
+                    await worker.loadLanguage('eng');
+                    await worker.initialize('eng');
                     const { data: { text } } = await worker.recognize(file.target.result);
-                    resultDiv.textContent = "圖上文字:\n" + text;
+                    resultDiv.textContent = "文字:\n" + text;
                     console.log(text);
 
                     await worker.terminate();
