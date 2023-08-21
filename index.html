@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>take picturesss</title>
+    <title>take ddeeeedddsss</title>
 </head>
 
 <body style="background-color: rgb(193, 113, 64);">
@@ -41,13 +41,13 @@
                 img_to_bi.src = file.target.result;
                 // 降解
                 img_to_bi.onload = function() {
-                resoluti=300
+                resoluti=500
                 canvas.width = resoluti;
                 canvas.height = img_to_bi.height*resoluti/img_to_bi.width;
-                console.log(canvas.height)
+                
                 ctx.drawImage(img_to_bi, 0, 0, canvas.width, canvas.height);
 
-                const imageData = ctx.getImageData(0, 0, 300, 50);
+                const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
                 const data = imageData.data;
 
                     //二值化
