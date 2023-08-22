@@ -18,7 +18,7 @@
             flex-wrap: wrap;
         }
     </style>
-    <title>人臉辨識系統</title>
+    <title>face ana</title>
 </head>
 <body style="background-color: rgb(121, 121, 121);">
     <div >
@@ -27,7 +27,7 @@
             <input id="pho" capture="user" type="file" accept="image/*" style="visibility: hidden;" />
         </p>
         <hr>
-        <div class="parent" id="result" style="font-size: 50px; " alt="使用圖片" title="被偵測圖片">請將文字放在畫面正中央</div>
+        <div class="parent" id="result" style="font-size: 50px; " alt="使用圖片" title="被偵測圖片">請將臉部放在畫面正中央</div>
         <hr>
         <img src="pic2000.png" style="display:block; margin:auto;" id="Im_image" width="100%">
     </div>
@@ -49,7 +49,7 @@
 
         function handleFilesImage() {
             img.src = ""
-            resultDiv.textContent = "文字:處理中...";
+            resultDiv.textContent = "人臉辨識中...";
             const fileData = this.files;
             const reader = new FileReader();
             reader.readAsDataURL(fileData[0]);
