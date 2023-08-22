@@ -3,34 +3,50 @@
 <html lang="en">
 <head>
     <style>
+        #butt:hover{
+            background-color: rgb(119, 185, 169);
+        }
+        #butt{
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: rgb(123, 205, 186);
+            font-size: 90px; 
+        }
         .parent {
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
         }
     </style>
-    <title>take 555</title>
+    <title>aba</title>
 </head>
-<body style="background-color: rgb(193, 113, 64);">
+<body style="background-color: rgb(232, 194, 202);">
     <div >
         <p >
-            <label class="parent" for="pho" style="font-size: 90px; background-color: rgb(194, 226, 227);">點此拍照</label>
+            <label id="butt" class="parent" for="pho">點此拍照</label>
             <input id="pho" capture="environment" type="file" accept="image/*" style="visibility: hidden;" />
         </p>
         <hr>
-        <div class="parent" id="result" style="font-size: 50px; " alt="使用圖片" title="被偵測圖片">圖上文字:</div>
+        <div class="parent" id="result" style="font-size: 50px; " alt="使用圖片" title="被偵測圖片">請將文字放在畫面正中央</div>
         <hr>
-        <img style="display:block; margin:auto;" id="Im_image" width="75%">
+        <img src="C:\Users\admin\Downloads\pic2000.png" style="display:block; margin:auto;" id="Im_image" width="60%">
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tesseract.js/4.1.1/tesseract.min.js"></script>
     <script>
         const input = document.getElementById('pho');
+        const butt = document.getElementById('butt');
         const img = document.getElementById('Im_image');
         const resultDiv = document.getElementById('result');
         input.addEventListener('change', handleFilesImage, false);
         const canvas = document.createElement('canvas');
         const ctx = canvas.getContext('2d');
         const img_to_bi = new Image();
+
+        butt.addEventListener("touchstart", e => {
+        console.log("hi")
+        butt.style.backgroundColor="red"
+        })
+
         function handleFilesImage() {
             img.src = ""
             resultDiv.textContent = "文字:處理中...";
