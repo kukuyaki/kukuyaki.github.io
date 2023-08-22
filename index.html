@@ -1,4 +1,4 @@
-<!-- 目前最成功的版本 -->
+<!-- pdf檔案的版本 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,7 +18,7 @@
             flex-wrap: wrap;
         }
     </style>
-    <title>pdf ana</title>
+    <title>dddd</title>
 </head>
 <body style="background-color: rgb(121, 121, 121);">
     <div >
@@ -58,9 +58,9 @@
                 img_to_bi.src = file.target.result;
                 // 降解
                 img_to_bi.onload = function () {
-                    resoluti = 550
-                    canvas.width = resoluti;
-                    canvas.height = img_to_bi.height * resoluti / img_to_bi.width;
+                    // resoluti = 550
+                    // canvas.width = resoluti;
+                    // canvas.height = img_to_bi.height * resoluti / img_to_bi.width;
                     ctx.drawImage(img_to_bi, 0, 0, canvas.width, canvas.height);
                     const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
                     const data = imageData.data;
