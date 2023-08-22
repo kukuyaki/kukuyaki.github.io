@@ -18,13 +18,13 @@
             flex-wrap: wrap;
         }
     </style>
-    <title>aladdd</title>
+    <title>人臉辨識系統</title>
 </head>
 <body style="background-color: rgb(121, 121, 121);">
     <div >
         <p >
             <label id="butt" class="parent" for="pho">點此拍照</label>
-            <input id="pho" capture="environment" type="file" accept="image/*" style="visibility: hidden;" />
+            <input id="pho" capture="user" type="file" accept="image/*" style="visibility: hidden;" />
         </p>
         <hr>
         <div class="parent" id="result" style="font-size: 50px; " alt="使用圖片" title="被偵測圖片">請將文字放在畫面正中央</div>
@@ -62,9 +62,8 @@
                     canvas.width = resoluti;
                     canvas.height = img_to_bi.height * resoluti / img_to_bi.width;
                     ctx.drawImage(img_to_bi, 0, 0, canvas.width, canvas.height);
-                    const imageData = ctx.getImageData(0, canvas.height*0.4, canvas.width, canvas.height*0.2);
-                    ctx.clearRect(0, 0, canvas.width, canvas.height*0.4)
-                    ctx.clearRect(0, canvas.height*0.6, canvas.width, canvas.height)
+                    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                    
                     const data = imageData.data;
                     //二值化
                     for (let i = 0; i < data.length; i += 4) {
@@ -72,7 +71,7 @@
                         const binaryValue = grayscale > 128 ? 255 : 0;
                         data[i] = data[i + 1] = data[i + 2] = binaryValue;
                     }
-                    ctx.putImageData(imageData, 0, canvas.height*0.4);
+                    ctx.putImageData(imageData, 0, 0);
                     const binaryDataURL = canvas.toDataURL('image/png');
                     img_to_bi.src = binaryDataURL
                     img.src = binaryDataURL
@@ -85,7 +84,7 @@
                     await worker.loadLanguage('eng');
                     await worker.initialize('eng');
                     const { data: { text } } = await worker.recognize(img_to_bi.src);
-                    resultDiv.textContent = text;
+                    resultDiv.textContent = "醜人";
                     console.log(text);
                     await worker.terminate();
                 })();
