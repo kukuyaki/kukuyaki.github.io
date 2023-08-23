@@ -1,10 +1,11 @@
+<!-- pdf最完整版 -->
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PDF文字辨識</title>
+    <title>PDF to Image Converter</title>
     <style>
         body {
             background-color: rgb(105, 105, 105);
@@ -32,14 +33,14 @@
             
         }
         .ahahaa {
-            font-size :30px;
+            font-size :25px;
         }
-        #imageContainer img {
+        #imageContainer  {
+            font-size :20px;
             display: flex;
             flex-direction: column;
             max-width: 100%;
             height: auto;
-            margin-top: 20px;
         }
     </style>
 
@@ -48,7 +49,7 @@
 <body>
     
     <p>
-    <label id="butt" class="parent" for="pdfInput">選擇pdf檔案</label>
+    <label id="butt" class="parent" for="pdfInput">"選擇pdf檔案"</label>
     <input id="pdfInput"  type="file" accept=".pdf" style="visibility: hidden;" />
     </p>
 
@@ -63,6 +64,7 @@
 
     <script>
         const resultDiv = document.getElementById('result');
+        const canvas = document.createElement('canvas');
         
 
         document.getElementById('pdfInput').addEventListener('change', async function (event) {
@@ -100,6 +102,9 @@
                         const image = new Image();
                         image.src = canvas.toDataURL('image/png'); // Convert canvas to PNG image
 
+                        
+
+
                          const { createWorker } = Tesseract;
                          //下面著個await很重要，有他才會照頁數輸出
                          await (async () => {
@@ -107,8 +112,10 @@
                             await worker.loadLanguage('eng+chi_tra');
                             await worker.initialize('eng+chi_tra');
                             const { data: { text } } = await worker.recognize(image.src);
-
-                             const pageNumberText = document.createTextNode('Page ' + pageNumber + text);
+                            
+                            var lines = text.split('\n');
+                            
+                            const pageNumberText = document.createTextNode('Page ' + pageNumber);
                             const paragraph = document.createElement('p');
                             paragraph.className="ahahaa";
                             image.style="display:block; margin:auto;"
@@ -116,6 +123,14 @@
 
                             await document.getElementById('imageContainer').appendChild(image);
                             await document.getElementById('imageContainer').appendChild(paragraph);
+
+                            for (var i = 0; i < lines.length; i++) {
+                            var line = lines[i];
+                            var lineElement = document.createTextNode(line);
+                            await document.getElementById('imageContainer').appendChild(lineElement);
+                            if (i < lines.length) {
+                                document.getElementById('imageContainer').appendChild(document.createElement("br"));
+                            }}
                             await worker.terminate();
                         })();
                     }
