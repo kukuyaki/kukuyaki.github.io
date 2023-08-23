@@ -27,7 +27,7 @@
             flex-wrap: wrap;
         }
     </style>
-    <title>take picturesss</title>
+    <title>手寫</title>
 </head>
 <body>
     <div >
@@ -36,7 +36,7 @@
             <input id="pho" capture="environment" type="file" accept="image/*" style="visibility: hidden;" />
         </p>
         <hr>
-        <div class="parent" id="result" style="font-size: 50px; " alt="使用圖片" title="被偵測圖片">請將文字放在畫面正中央</div>
+        <div class="parent" id="result" style="font-size: 50px; " alt="使用圖片" title="被偵測圖片">文字</div>
         <hr>
         <img src="" style="display:block; margin:auto;" id="Im_image" width="100%">
     </div>
@@ -67,8 +67,8 @@
                 // 降解
                 img_to_bi.onload = function () {
                     resoluti = 550
-                    canvas.width = img_to_bi.width;
-                    canvas.height = img_to_bi.height;
+                    canvas.width = resoluti;
+                    canvas.height = img_to_bi.height * resoluti / img_to_bi.width;
                     ctx.drawImage(img_to_bi, 0, 0, canvas.width, canvas.height);
                     const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
                     
