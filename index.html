@@ -1,14 +1,11 @@
-<!-- pdf最完整版 -->
+<!-- 照片的版本 -->
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PDF to Image Converter</title>
     <style>
         body {
-            background-color: rgb(105, 105, 105);
+            color:rgb(0, 0, 0);
+            background-color: rgb(120, 192, 224);
             font-family: Arial, sans-serif;
             display: flex;
             flex-direction: column;
@@ -16,129 +13,91 @@
             margin: 20px;
         }
         #butt:hover{
-            background-color: rgb(90, 90, 90);
+            background-color: rgb(252, 223, 166);
         }
         #butt{
             border-radius: 5px;
             cursor: pointer;
-            background-color: rgb(70, 70, 70);
-            font-size: 70px; 
+            background-color: rgb(255, 211, 232);
+            font-size: 90px; 
         }
-        
         .parent {
             display: flex;
-            
             justify-content: center;
-            flex-direction: column
-            
-        }
-        .ahahaa {
-            font-size :25px;
-        }
-        #imageContainer  {
-            font-size :20px;
-            display: flex;
-            flex-direction: column;
-            max-width: 100%;
-            height: auto;
+            flex-wrap: wrap;
         }
     </style>
-
+    <title>take picturesss</title>
 </head>
-
 <body>
-    
-    <p>
-    <label id="butt" class="parent" for="pdfInput">"選擇pdf檔案"</label>
-    <input id="pdfInput"  type="file" accept=".pdf" style="visibility: hidden;" />
-    </p>
-
-    <div class="parent" id="result" style="font-size: 50px; " alt="使用圖片" title="被偵測圖片">文檔辨識</div>
-
-    <div id="imageContainer" class="parent"></div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
+    <div >
+        <p >
+            <label id="butt" class="parent" for="pho">手寫拍攝</label>
+            <input id="pho" capture="environment" type="file" accept="image/*" style="visibility: hidden;" />
+        </p>
+        <hr>
+        <div class="parent" id="result" style="font-size: 50px; " alt="使用圖片" title="被偵測圖片">請將文字放在畫面正中央</div>
+        <hr>
+        <img src="" style="display:block; margin:auto;" id="Im_image" width="100%">
+    </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tesseract.js/4.1.1/tesseract.min.js"></script>
-
-
-
     <script>
+        const input = document.getElementById('pho');
+        const butt = document.getElementById('butt');
+        const img = document.getElementById('Im_image');
         const resultDiv = document.getElementById('result');
+        input.addEventListener('change', handleFilesImage, false);
         const canvas = document.createElement('canvas');
-        
+        const ctx = canvas.getContext('2d');
+        const img_to_bi = new Image();
 
-        document.getElementById('pdfInput').addEventListener('change', async function (event) {
-            const file = event.target.files[0];
-            if (file) {
-                const pdfData = await file.arrayBuffer();
-                const loadingTask = pdfjsLib.getDocument({ data: pdfData });
+        butt.addEventListener("touchstart", e => {
+        butt.style.backgroundColor="red"
+        })
 
-                loadingTask.promise.then(async function (pdf) {
-                    resultDiv.textContent="處理中..."
-                    const numPages = pdf.numPages; // Get the total number of pages in the PDF
-
-                    const imageContainer = document.getElementById('imageContainer');
-                    imageContainer.innerHTML = ''; // Clear previous images
-                    document.getElementById('imageContainer').innerHTML = ''; // Clear previous image
-                    //迴圈
-                    for (let pageNumber = 1; pageNumber <= numPages; pageNumber++) {
-                        const page = await pdf.getPage(pageNumber);
-
-                        const scale = 2;
-                        const viewport = page.getViewport({ scale });
-
-                        const canvas = document.createElement('canvas');
-                        canvas.width = viewport.width;
-                        canvas.height = viewport.height;
-
-                        const canvasContext = canvas.getContext('2d');
-                        const renderContext = {
-                            canvasContext,
-                            viewport,
-                        };
-
-                        await page.render(renderContext).promise;
-
-                        const image = new Image();
-                        image.src = canvas.toDataURL('image/png'); // Convert canvas to PNG image
-
-                        
-
-
-                         const { createWorker } = Tesseract;
-                         //下面著個await很重要，有他才會照頁數輸出
-                         await (async () => {
-                            const worker = await createWorker({ logger: m => console.log(m), });
-                            await worker.loadLanguage('eng+chi_tra');
-                            await worker.initialize('eng+chi_tra');
-                            const { data: { text } } = await worker.recognize(image.src);
-                            
-                            var lines = text.split('\n');
-                            
-                            const pageNumberText = document.createTextNode('Page ' + pageNumber);
-                            const paragraph = document.createElement('p');
-                            paragraph.className="ahahaa";
-                            image.style="display:block; margin:auto;"
-                            await paragraph.appendChild(pageNumberText);
-
-                            await document.getElementById('imageContainer').appendChild(image);
-                            await document.getElementById('imageContainer').appendChild(paragraph);
-
-                            for (var i = 0; i < lines.length; i++) {
-                            var line = lines[i];
-                            var lineElement = document.createTextNode(line);
-                            await document.getElementById('imageContainer').appendChild(lineElement);
-                            if (i < lines.length) {
-                                document.getElementById('imageContainer').appendChild(document.createElement("br"));
-                            }}
-                            await worker.terminate();
-                        })();
+        function handleFilesImage() {
+            img.src = ""
+            resultDiv.textContent = "文字:處理中...";
+            const fileData = this.files;
+            const reader = new FileReader();
+            reader.readAsDataURL(fileData[0]);
+            reader.addEventListener('load', file => {
+                img.src = file.target.result;
+                img_to_bi.src = file.target.result;
+                // 降解
+                img_to_bi.onload = function () {
+                    resoluti = 550
+                    canvas.width = img_to_bi.width;
+                    canvas.height = img_to_bi.height;
+                    ctx.drawImage(img_to_bi, 0, 0, canvas.width, canvas.height);
+                    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                    
+                    const data = imageData.data;
+                    //二值化
+                    for (let i = 0; i < data.length; i += 4) {
+                        const grayscale = data[i] * 0.299 + data[i + 1] * 0.587 + data[i + 2] * 0.114;
+                        const binaryValue = grayscale > 128 ? 255 : 0;
+                        data[i] = data[i + 1] = data[i + 2] = binaryValue;
                     }
-                    resultDiv.textContent = "辨識完成";
-                });
-            }
-        });
+                    ctx.putImageData(imageData, 0, 0);
+                    const binaryDataURL = canvas.toDataURL('image/png');
+                    img_to_bi.src = binaryDataURL
+                    img.src = binaryDataURL
+                    // Now you can use binaryDataURL as needed, e.g., set it as the src of an img element
+                };
+                //辨識文字
+                const { createWorker } = Tesseract;
+                (async () => {
+                    const worker = await createWorker({ logger: m => console.log(m), });;
+                    await worker.loadLanguage('eng+chi_tra');
+                    await worker.initialize('eng+chi_tra');
+                    const { data: { text } } = await worker.recognize(img_to_bi.src);
+                    resultDiv.textContent = text;
+                    console.log(text);
+                    await worker.terminate();
+                })();
+            });
+        }
     </script>
 </body>
-
 </html>
