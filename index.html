@@ -1,103 +1,83 @@
-<!-- 照片的版本 -->
+<script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+
+<!-- 輸入並可以回傳 -->
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <style>
-        body {
-            color:rgb(0, 0, 0);
-            background-color: rgb(120, 192, 224);
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin: 20px;
-        }
-        #butt:hover{
-            background-color: rgb(252, 223, 166);
-        }
-        #butt{
-            border-radius: 5px;
-            cursor: pointer;
-            background-color: rgb(255, 211, 232);
-            font-size: 90px; 
-        }
-        .parent {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-    </style>
-    <title>手寫</title>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LIFF App</title>
 </head>
-<body>
-    <div >
-        <p >
-            <label id="butt" class="parent" for="pho">手寫拍攝</label>
-            <input id="pho" capture="environment" type="file" accept="image/*" style="visibility: hidden;" />
-        </p>
-        <hr>
-        <div class="parent" id="result" style="font-size: 50px; " alt="使用圖片" title="被偵測圖片">文字</div>
-        <hr>
-        <img src="" style="display:block; margin:auto;" id="Im_image" width="100%">
-    </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tesseract.js/4.1.1/tesseract.min.js"></script>
-    <script>
-        const input = document.getElementById('pho');
-        const butt = document.getElementById('butt');
-        const img = document.getElementById('Im_image');
-        const resultDiv = document.getElementById('result');
-        input.addEventListener('change', handleFilesImage, false);
-        const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');
-        const img_to_bi = new Image();
 
-        butt.addEventListener("touchstart", e => {
-        butt.style.backgroundColor="red"
+<body style="background-color:rgb(246, 250, 175);">
+  <div class="col-12" style="margin: 10px">
+    <input namne="name" type="text" placeholder="輸入姓名AbbbAA" id="name" class="form-control" autofocus required />
+  </div>
+  <div class="col-12" style="margin: 10px">
+    <input namne="number" type="tel" placeholder="輸入電話" id="number" class="form-control" required />
+  </div>
+  <div class="col-12" style="margin: 10px">
+    <input namne="address" type="text" placeholder="輸入地址" id="address" class="form-control" required />
+  </div>
+  <div class="col-12" style="margin: 10px">
+    <input namne="mail" type="email" placeholder="輸入信箱" id="email" class="form-control" required />
+  </div>
+  <div class="col-12" style="margin: 10px">時間
+    <input namne="mail" type="date" id="date" class="form-control" required />
+  </div>
+
+  <button id="btnMsg" onclick="sendMsg()">確認</button>
+  <button id="btnMsg" onclick="closeW()">關閉</button>
+
+  <script>
+    async function sendMsg() {
+      const name = document.getElementById('name').value;
+      const number = document.getElementById('number').value;
+      const address = document.getElementById('address').value;
+      const email = document.getElementById('email').value;
+      const date = document.getElementById('date').value;
+
+      liff
+        .sendMessages([
+          {
+            type: "text",
+            text: "名字:" + name + "\n電話:" + number + "\n地址:" + address + "\n信箱:" + email+ "\n日期:" + date,
+
+          },
+        ])
+        .then(() => {
+          console.log("message sent");
         })
+        .catch((err) => {
+          console.log("error", err);
+        });
+      liff.closeWindow();
+    }
 
-        function handleFilesImage() {
-            img.src = ""
-            resultDiv.textContent = "文字:處理中...";
-            const fileData = this.files;
-            const reader = new FileReader();
-            reader.readAsDataURL(fileData[0]);
-            reader.addEventListener('load', file => {
-                img.src = file.target.result;
-                img_to_bi.src = file.target.result;
-                // 降解
-                img_to_bi.onload = function () {
-                    resoluti = 550
-                    canvas.width = resoluti;
-                    canvas.height = img_to_bi.height * resoluti / img_to_bi.width;
-                    ctx.drawImage(img_to_bi, 0, 0, canvas.width, canvas.height);
-                    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-                    
-                    const data = imageData.data;
-                    //二值化
-                    for (let i = 0; i < data.length; i += 4) {
-                        const grayscale = data[i] * 0.299 + data[i + 1] * 0.587 + data[i + 2] * 0.114;
-                        const binaryValue = grayscale > 128 ? 255 : 0;
-                        data[i] = data[i + 1] = data[i + 2] = binaryValue;
-                    }
-                    ctx.putImageData(imageData, 0, 0);
-                    const binaryDataURL = canvas.toDataURL('image/png');
-                    img_to_bi.src = binaryDataURL
-                    img.src = binaryDataURL
-                    // Now you can use binaryDataURL as needed, e.g., set it as the src of an img element
-                };
-                //辨識文字
-                const { createWorker } = Tesseract;
-                (async () => {
-                    const worker = await createWorker({ logger: m => console.log(m), });;
-                    await worker.loadLanguage('eng+chi_tra');
-                    await worker.initialize('eng+chi_tra');
-                    const { data: { text } } = await worker.recognize(img_to_bi.src);
-                    resultDiv.textContent = text;
-                    console.log(text);
-                    await worker.terminate();
-                })();
-            });
-        }
-    </script>
+    async function closeW() {
+      liff.closeWindow();
+    }
+    async function getUserProfile() {
+      const profile = await liff.getProfile();
+      document.getElementById("pictureUrl").src = profile.pictureUrl;
+      document.getElementById("userId").append(profile.userId);
+      document.getElementById("displayName").append(profile.displayName);
+    }
+    function getEnvironment() {
+      document.getElementById("os").append(liff.getOS());
+      document.getElementById("language").append(liff.getLanguage());
+      document.getElementById("version").append(liff.getVersion());
+    }
+    async function main() {
+      const init = await liff.init({ liffId: "2000402390-1Wm0v2ww" });
+      getEnvironment();
+      getUserProfile();
+    }
+    main();
+  </script>
 </body>
+
 </html>
