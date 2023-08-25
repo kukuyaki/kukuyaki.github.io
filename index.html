@@ -1,39 +1,237 @@
+<script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+
+<!-- 輸入並可以回傳 -->
+<!-- 目標:1.排版 -->
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <link rel=stylesheet type="text/css" href="./main.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>申請表</title>
-    <script type="text/javascript" src="main.js"></script>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LIFF App</title>
 </head>
 
-<body>
-    <div class="div1">
-    <form action="">
+<body style="background-color:rgb(246, 250, 175);">
+  <div class="col-12" style="margin: 10px">
+    <input namne="name" type="text" placeholder="輸入姓名" id="name" class="form-control" autofocus required />
+  </div>
+  <div class="col-12" style="margin: 10px">
+    <input namne="number" type="tel" placeholder="輸入電話" id="number" class="form-control" required />
+  </div>
+  <div class="col-12" style="margin: 10px">
+    <input namne="address" type="text" placeholder="輸入地址" id="address" class="form-control" required />
+  </div>
+  <div class="col-12" style="margin: 10px">
+    <input namne="mail" type="email" placeholder="輸入信箱" id="email" class="form-control" required />
+  </div>
+  <div class="col-12" style="margin: 10px">時間
+    <input namne="mail" type="date" id="date" class="form-control" required />
+  </div>
 
-    <label for="name"><h4>姓名</h4>
-    <input id="name" class="form-control" namne="name" type="text" placeholder="輸入姓名"  autofocus  />
-    </label>
-    <label for="number"><h4>電話號碼</h4>
-    <input id="number" class="form-control" namne="number" type="tel" placeholder="輸入電話"  required />
-    </label>
-    <label for="address"><h4>地址</h4>
-    <input id="address" class="form-control" namne="address" type="text" placeholder="輸入地址"  required />
-    </label>
-    <label for="email"><h4>信箱</h4>
-    <input id="email" class="form-control" namne="mail" type="email" placeholder="輸入信箱"  required />
-    </label>
-    <label for="date"><h4>日期</h4>
-    <input id="date" class="form-control" namne="mail" type="date"  required />
-    </label></form>
-    </div>
-    <div>
-    <button id="btnMsg" onclick="sendMsg()">確認</button>
-    <div id="space"></div>
-    <button id="btnMsg" onclick="closeW()">關閉</button>
-    </div>
+  <button id="btnMsg" onclick="sendMsg()">確認</button>
+  <button id="btnMsg" onclick="closeW()">關閉</button>
+
+  <script>
+  //傳送訊息按鈕
+    async function sendMsg() {
+      const name = document.getElementById('name').value;
+      const number = document.getElementById('number').value;
+      const address = document.getElementById('address').value;
+      const email = document.getElementById('email').value;
+      const date = document.getElementById('date').value;
+
+      liff
+        .sendMessages([
+        {
+  "type": "bubble",
+  "header": {
+    "type": "box",
+    "layout": "vertical",
+    "contents": []
+  },
+  "hero": {
+    "type": "image",
+    "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/01_1_cafe.png",
+    "size": "full",
+    "aspectRatio": "20:13",
+    "aspectMode": "cover",
+    "action": {
+      "type": "uri",
+      "uri": "http://linecorp.com/"
+    }
+  },
+  "body": {
+    "type": "box",
+    "layout": "vertical",
+    "contents": [
+      {
+        "type": "text",
+        "text": "Brown Cafe",
+        "weight": "bold",
+        "size": "xl"
+      },
+      {
+        "type": "box",
+        "layout": "baseline",
+        "margin": "md",
+        "contents": [
+          {
+            "type": "icon",
+            "size": "sm",
+            "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png"
+          },
+          {
+            "type": "icon",
+            "size": "sm",
+            "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png"
+          },
+          {
+            "type": "icon",
+            "size": "sm",
+            "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png"
+          },
+          {
+            "type": "icon",
+            "size": "sm",
+            "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png"
+          },
+          {
+            "type": "icon",
+            "size": "sm",
+            "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gray_star_28.png"
+          },
+          {
+            "type": "text",
+            "text": "4.0",
+            "size": "sm",
+            "color": "#999999",
+            "margin": "md",
+            "flex": 0
+          }
+        ]
+      },
+      {
+        "type": "box",
+        "layout": "vertical",
+        "margin": "lg",
+        "spacing": "sm",
+        "contents": [
+          {
+            "type": "box",
+            "layout": "baseline",
+            "spacing": "sm",
+            "contents": [
+              {
+                "type": "text",
+                "text": "Place",
+                "color": "#aaaaaa",
+                "size": "sm",
+                "flex": 1
+              },
+              {
+                "type": "text",
+                "text": "Miraina Tower, 4-1-6 Shinjuku, Tokyo",
+                "wrap": true,
+                "color": "#666666",
+                "size": "sm",
+                "flex": 5
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "baseline",
+            "spacing": "sm",
+            "contents": [
+              {
+                "type": "text",
+                "text": "Time",
+                "color": "#aaaaaa",
+                "size": "sm",
+                "flex": 1
+              },
+              {
+                "type": "text",
+                "text": "10:00 - 23:00",
+                "wrap": true,
+                "color": "#666666",
+                "size": "sm",
+                "flex": 5
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "footer": {
+    "type": "box",
+    "layout": "vertical",
+    "spacing": "sm",
+    "contents": [
+      {
+        "type": "button",
+        "style": "link",
+        "height": "sm",
+        "action": {
+          "type": "uri",
+          "label": "CALL",
+          "uri": "https://linecorp.com"
+        }
+      },
+      {
+        "type": "button",
+        "style": "link",
+        "height": "sm",
+        "action": {
+          "type": "uri",
+          "label": "WEBSITE",
+          "uri": "https://linecorp.com"
+        }
+      },
+      {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [],
+        "margin": "sm"
+      }
+    ],
+    "flex": 0
+  }
+},
+        ])
+        .then(() => {
+          console.log("message sent");
+        })
+        .catch((err) => {
+          console.log("error", err);
+        });
+      liff.closeWindow();
+    }
+  //關閉視窗按鈕
+    async function closeW() {
+      liff.closeWindow();
+    }
+    /////////////////////////////////////
+    async function getUserProfile() {
+      const profile = await liff.getProfile();
+      document.getElementById("pictureUrl").src = profile.pictureUrl;
+      document.getElementById("userId").append(profile.userId);
+      document.getElementById("displayName").append(profile.displayName);
+    }
+    function getEnvironment() {
+      document.getElementById("os").append(liff.getOS());
+      document.getElementById("language").append(liff.getLanguage());
+      document.getElementById("version").append(liff.getVersion());
+    }
+    async function main() {
+      const init = await liff.init({ liffId: "2000402390-1Wm0v2ww" });
+      getEnvironment();
+      getUserProfile();
+    }
+    main();
+  </script>
 </body>
 
 </html>
