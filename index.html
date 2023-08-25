@@ -9,7 +9,7 @@
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="favicon.ico" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>LIFsssssssssssssF App</title>
+  <title>LIFF App88998899</title>
 </head>
 
 <body style="background-color:rgb(246, 250, 175);">
@@ -43,11 +43,45 @@
 
       liff
         .sendMessages([
-          {
-            type: "text",
-            text: "名字:" + name + "\n電話:" + number + "\n地址:" + address + "\n信箱:" + email+ "\n日期:" + date,
-
-          },
+        {
+  "type": "bubble",
+  "body": {
+    "type": "box",
+    "layout": "vertical",
+    "contents": [
+      {
+        "type": "separator"
+      },
+      {
+        "type": "text",
+        "text": "hello, world"
+      },
+      {
+        "type": "button",
+        "action": {
+          "type": "uri",
+          "label": "action",
+          "uri": "http://linecorp.com/"
+        }
+      },
+      {
+        "type": "filler"
+      },
+      {
+        "type": "separator"
+      },
+      {
+        "type": "image",
+        "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/01_1_cafe.png"
+      },
+      {
+        "type": "box",
+        "layout": "vertical",
+        "contents": []
+      }
+    ]
+  }
+},
         ])
         .then(() => {
           console.log("message sent");
