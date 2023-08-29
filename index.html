@@ -9,7 +9,7 @@
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="favicon.ico" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>LIFF Appfff</title>
+  <title>y資料填寫</title>
 </head>
 
 <body style="background-color:rgb(246, 250, 175);">
@@ -33,7 +33,7 @@
   <button id="btnMsg" onclick="closeW()">關閉</button>
 
   <script>
-  //傳送訊息按鈕
+    //傳送訊息按鈕
     async function sendMsg() {
       const name = document.getElementById('name').value;
       const number = document.getElementById('number').value;
@@ -45,7 +45,7 @@
         .sendMessages([
           {
             type: "text",
-            text: "名字:" + name + "\n電話:" + number + "\n地址:" + address + "\n信箱:" + email+ "\n日期:" + date,
+            text: "申裝資料\n名字:" + name + "\n電話:" + number + "\n地址:" + address + "\n信箱:" + email + "\n日期:" + date,
 
           },
         ])
@@ -57,7 +57,7 @@
         });
       liff.closeWindow();
     }
-  //關閉視窗按鈕
+    //關閉視窗按鈕
     async function closeW() {
       liff.closeWindow();
     }
