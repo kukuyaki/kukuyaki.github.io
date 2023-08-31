@@ -9,7 +9,7 @@
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="favicon.ico" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>LIFF App</title>
+  <title>OwOp</title>
 </head>
 
 <body style="background-color:rgb(246, 250, 175);">
@@ -40,6 +40,7 @@
       const address = document.getElementById('address').value;
       const email = document.getElementById('email').value;
       const date = document.getElementById('date').value;
+      ////////////////////////////////////
       var mysql = require('mysql');
 
       var pool = mysql.createPool({
@@ -54,8 +55,8 @@
       if (err) {
         console.log(err)
       } else {
-        connection.query( 'insert into customerinfo (name,tel,address,date,mail) values("%s","%s","%s","%s","%s")',
-        [name], [number],[address],[email],[date],
+        connection.query( 'insert into customerinfo (name,tel,address,date,mail) values(?,?,?,?,?)',
+      [name, number,address,email,date],
           function(err, rows) {
             //callback function
             console.log(rows)
@@ -65,6 +66,9 @@
         });
       }
       });
+      ////////////////////////////////////
+
+
       liff
         .sendMessages([
           {
